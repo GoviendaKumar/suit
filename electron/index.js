@@ -5,7 +5,7 @@ const path = require('path')
 const env  = require('../dev')
 let window = null
 
-let server = require('../server/src/')
+let server = require('../server/')
 
 if (env == 'dev') require('electron-reload')(__dirname, {
 	hardResetMethod : 'exit',

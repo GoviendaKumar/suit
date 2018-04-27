@@ -70,19 +70,19 @@ let IMUs = {
 	rHand : Widget({position: 'rHand', title: 'right hand'})
 }
 
-// setInterval(() => {
-// 	let setTriplet = plot => {
-// 		plot.x.record(Math.random())
-// 		plot.y.record(Math.random())
-// 		plot.z.record(Math.random())
-// 	}
-// 	let setDevice = device => {
-// 		setTriplet(device.gyro)
-// 		setTriplet(device.magn)
-// 		setTriplet(device.acc)
-// 	}
-// 	for (let i in IMUs) setDevice(IMUs[i])
-// }, 100)
+setInterval(() => {
+ 	let setTriplet = plot => {
+ 		plot.x.record(Math.random())
+ 		plot.y.record(Math.random())
+ 		plot.z.record(Math.random())
+ 	}
+ 	let setDevice = device => {
+		setTriplet(device.gyro)
+ 		setTriplet(device.magn)
+ 		setTriplet(device.acc)
+ 	}
+ 	for (let i in IMUs) setDevice(IMUs[i])
+ }, 100)
 
 loop(() => {
 	for (let i in IMUs) IMUs[i].draw()

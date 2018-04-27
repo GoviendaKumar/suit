@@ -133,9 +133,10 @@ ipcMain.on('ui', (event, arg) => {
 // midi house work
 console.log(`[midi] devices found:`)
 for (let i = 0; i < midi.getPortCount(); i ++) {
-	console.log(`\t${i} :`, midi.getPortName(i))
+	let name = midi.getPortName(i);
+	console.log(`\t${i} :`, name)
+	if (name.match('Numark iDJ Live II')) midi.openPort(i)
 }
-midi.openPort(0)
 
 // osc house work
 osc.open()
