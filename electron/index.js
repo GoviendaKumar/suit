@@ -23,7 +23,7 @@ let createWindow = () => {
 		// frame 	    : false
 	})
 	if (env == 'dev') {
-		window.webContents.openDevTools()
+		//window.webContents.openDevTools()
 		window.loadURL('http://localhost:8000/client')
 	} else
 		window.loadURL(url.format({
