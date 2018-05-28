@@ -4,13 +4,13 @@ export let loop = callback => {
 		callback()
 		window.requestAnimationFrame(frame)
 	}
-	window.requestAnimationFrame(frame)
+	frame()
 }
 
 export let map = (
-	value, 
-	aMin, aMax, 
-	bMin, bMax, 
+	value,
+	aMin, aMax,
+	bMin, bMax,
 	clamp
 ) => {
 	var x = clamp == true? (
@@ -18,8 +18,8 @@ export let map = (
 		value > aMax? aMax: value
 	):  value
 	return (
-		(x - aMin) / 
-		(aMax - aMin) * 
+		(x - aMin) /
+		(aMax - aMin) *
 		(bMax - bMin) + bMin
 	)
 }
@@ -57,7 +57,7 @@ export let RGBtoHSV = ({r, g, b}) => {
 	let h, s, v = max
 	let d = max - min
 	s = max == 0? 0: d / max
-	if (max == min) 
+	if (max == min)
 		h = 0
 	else {
 		switch (max) {
@@ -89,8 +89,8 @@ export let HSVtoRGB = ({h, s, v}) => {
 	}
 	// r, g, b [0, 255]
 	return {
-		r: parseInt(r * 255), 
-		g: parseInt(g * 255), 
+		r: parseInt(r * 255),
+		g: parseInt(g * 255),
 		b: parseInt(b * 255)
 	}
 }
