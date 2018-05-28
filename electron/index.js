@@ -22,10 +22,12 @@ let createWindow = () => {
 		// transparent : true,
 		// frame 	    : false
 	})
-	if (env == 'dev') {
-		//window.webContents.openDevTools()
-		window.loadURL('http://localhost:8000/client')
-	} else
+	if (env == 'dev')
+		setTimeout(() => {
+			window.loadURL('http://localhost:8000/client')
+			window.webContents.openDevTools()
+		}, 3000)
+	else
 		window.loadURL(url.format({
 			pathname : path.join(__dirname, '../client/index.html'),
 			protocol : 'file:',
