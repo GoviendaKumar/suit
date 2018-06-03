@@ -2,7 +2,7 @@
 console.log(`\nHello, Michaela! ${new Date()}\n`)
 
 const {
-	ipcMain, 
+	ipcMain,
 	BrowserWindow
 } = require('electron')
 
@@ -14,12 +14,12 @@ const Storage = require('./Storage')
 let storage = new Storage()
 var midi = new MIDI.input()
 var osc = new OSC.UDPPort({
-	localAddress : '0.0.0.0', 
+	localAddress : '192.168.1.255',
 	localPort    : 9000
 })
 
 let sendToArduino = (address, args) => {
-	osc.send({address, args}, 
+	osc.send({address, args},
 		'192.168.1.123', 8000)
 }
 
@@ -38,27 +38,27 @@ let States = (params => {
 	return params
 })({
 	vibro : {
-		arduino : '/1/toggle1',
+		arduino : '/v1',
 		midi    : 76,
 		midiMap : v => v == 0? 0: 1
 	},
-	
+
 	r : {
-		arduino : '/1/faderR',
+		arduino : '/faderR',
 		midi    : 8,
 		midiMap : v => v/127
 	},
 	g : {
-		arduino : '/1/faderG',
+		arduino : '/faderG',
 		midi    : 23,
 		midiMap : v => v/127
 	},
 	b : {
-		arduino : '/1/faderB',
+		arduino : '/faderB',
 		midi    : 9,
 		midiMap : v => v/127
 	},
-	
+
 	gx1 : {arduino : '/1/gx1'},
 	gy1 : {arduino : '/1/gy1'},
 	gz1 : {arduino : '/1/gz1'},
@@ -68,7 +68,7 @@ let States = (params => {
 	ax1 : {arduino : '/1/ax1'},
 	ay1 : {arduino : '/1/ay1'},
 	ax1 : {arduino : '/1/az1'},
-	
+
 	gx2 : {arduino : '/1/gx2'},
 	gy2 : {arduino : '/1/gy2'},
 	gz2 : {arduino : '/1/gz2'},
@@ -81,7 +81,7 @@ let States = (params => {
 })
 
 // on connect
-osc.on('ready', () => { 
+osc.on('ready', () => {
 	for (let i in States)
 		sendToArduino(States[i].arduino, States[i].value)
 })
@@ -98,7 +98,7 @@ osc.on('bundle', (oscBundle, timeTag, info) => {
 		for (let i in States) {
 			if (address == States[i].arduino) {
 				sendToUi(i, args[0])
-				// console.log(i, args[0])
+				console.log(i, args[0])
 				break
 			}
 		}
