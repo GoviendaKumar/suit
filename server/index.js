@@ -13,13 +13,13 @@ const Storage = require('./Storage')
 // inits
 let storage = new Storage()
 var midi = new MIDI.input()
-var osc = new OSC.UDPPort({
-	localAddress : '192.168.1.255',
+var udpPort = new OSC.UDPPort({
+	localAddress : '0.0.0.0',
 	localPort    : 9000
 })
 
 let sendToArduino = (address, args) => {
-	osc.send({address, args},
+	udpPort.send({address, args},
 		'192.168.1.123', 8000)
 }
 
@@ -81,7 +81,7 @@ let States = (params => {
 })
 
 // on connect
-osc.on('ready', () => {
+udpPort.on('ready', () => {
 	for (let i in States)
 		sendToArduino(States[i].arduino, States[i].value)
 })
@@ -92,7 +92,7 @@ ipcMain.on('ready', (event, arg) => {
 })
 
 // on arduino change
-osc.on('bundle', (oscBundle, timeTag, info) => {
+udpPort.on('bundle', (oscBundle, timeTag, info) => {
 	oscBundle.packets.forEach(packet => {
 		let {address, args} = packet
 		for (let i in States) {
@@ -104,6 +104,11 @@ osc.on('bundle', (oscBundle, timeTag, info) => {
 		}
 	})
 })
+
+// OSC error handling
+udpPort.on("error", function (error) {
+    console.log("An error occurred: ", error.message);
+});
 
 // on midi change
 midi.on('message', (time, data) => {
@@ -139,7 +144,7 @@ for (let i = 0; i < midi.getPortCount(); i ++) {
 }
 
 // osc house work
-osc.open()
+udpPort.open()
 
 // exit
 process.on('SIGINT', () => {
