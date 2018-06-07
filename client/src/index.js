@@ -65,27 +65,27 @@ colorPicker.setColor({r: 255, g: 255, b: 255})
 pinList.forEach(i => pins[i].setColor({r: 255, g: 255, b: 255}))
 
 let IMUs = {
-	lHand : Widget({position: 'lHand' , title: 'Left Hand'}),
-	rHand : Widget({position: 'rHand', title: 'Right Hand'})
+	lArm : Widget({position: 'lHand' , title: 'Left Hand'}),
+	rArm : Widget({position: 'rHand', title: 'Right Hand'})
 }
 
 let vib = {
 	lArm : vibWidget({position: 'back', title: 'Back'})
 }
 
-setInterval(() => {
- 	let setTriplet = plot => {
- 		plot.x.record(Math.random())
- 		plot.y.record(Math.random())
- 		plot.z.record(Math.random())
- 	}
- 	let setDevice = device => {
-		setTriplet(device.acc)
-		setTriplet(device.gyro)
- 		setTriplet(device.magn)
- 	}
- 	for (let i in IMUs) setDevice(IMUs[i])
- }, 100)
+// setInterval(() => {
+//  	let setTriplet = plot => {
+//  		plot.x.record(Math.random())
+//  		plot.y.record(Math.random())
+//  		plot.z.record(Math.random())
+//  	}
+//  	let setDevice = device => {
+// 		setTriplet(device.acc)
+// 		setTriplet(device.gyro)
+//  		setTriplet(device.magn)
+//  	}
+//  	for (let i in IMUs) setDevice(IMUs[i])
+//  }, 100)
 
 loop(() => {
 	for (let i in IMUs) IMUs[i].draw()
@@ -95,29 +95,27 @@ loop(() => {
 ipcRenderer.on('update', (event, msg) => {
 	for (let i in msg) {
 		 console.log(msg)
-		 if (i == 'vibro') IMUs.lArm.vibro.setState(msg[i])
+	//	 if (i == 'vibro') IMUs.lArm.vibro.setState(msg[i])
 
-		 // if (i == 'axl') IMUs.lArm.acc.x.record(msg[i])
-		 // if (i == 'ayl') IMUs.lArm.acc.y.record(msg[i])
-		 // if (i == 'azl') IMUs.lArm.acc.z.record(msg[i])
-		 // if (i == 'gxl') IMUs.lArm.gyro.x.record(msg[i])
-		 // if (i == 'gyl') IMUs.lArm.gyro.y.record(msg[i])
-		 // if (i == 'gzl') IMUs.lArm.gyro.z.record(msg[i])
-		 // if (i == 'mxl') IMUs.lArm.magn.x.record(msg[i])
-		 // if (i == 'myl') IMUs.lArm.magn.y.record(msg[i])
-		 // if (i == 'mzl') IMUs.lArm.magn.z.record(msg[i])
-		 //
-		 //
-		 // if (i == 'axr') IMUs.rArm.acc.x.record(msg[i])
-		 // if (i == 'ayr') IMUs.rArm.acc.y.record(msg[i])
-		 // if (i == 'azr') IMUs.rArm.acc.z.record(msg[i])
-		 // if (i == 'gxr') IMUs.rArm.gyro.x.record(msg[i])
-		 // if (i == 'gyr') IMUs.rArm.gyro.y.record(msg[i])
-		 // if (i == 'gzr') IMUs.rArm.gyro.z.record(msg[i])
-		 // if (i == 'mxr') IMUs.rArm.magn.x.record(msg[i])
-		 // if (i == 'myr') IMUs.rArm.magn.y.record(msg[i])
-		 // if (i == 'mzr') IMUs.rArm.magn.z.record(msg[i])
+		 if (i == 'axl') IMUs.lArm.acc.x.record(msg[i])
+		 if (i == 'ayl') IMUs.lArm.acc.y.record(msg[i])
+		 if (i == 'azl') IMUs.lArm.acc.z.record(msg[i])
+		 if (i == 'gxl') IMUs.lArm.gyro.x.record(msg[i])
+		 if (i == 'gyl') IMUs.lArm.gyro.y.record(msg[i])
+		 if (i == 'gzl') IMUs.lArm.gyro.z.record(msg[i])
+		 if (i == 'mxl') IMUs.lArm.magn.x.record(msg[i])
+		 if (i == 'myl') IMUs.lArm.magn.y.record(msg[i])
+		 if (i == 'mzl') IMUs.lArm.magn.z.record(msg[i])
 
+		 if (i == 'axr') IMUs.rArm.acc.x.record(msg[i])
+		 if (i == 'ayr') IMUs.rArm.acc.y.record(msg[i])
+		 if (i == 'azr') IMUs.rArm.acc.z.record(msg[i])
+		 if (i == 'gxr') IMUs.rArm.gyro.x.record(msg[i])
+		 if (i == 'gyr') IMUs.rArm.gyro.y.record(msg[i])
+		 if (i == 'gzr') IMUs.rArm.gyro.z.record(msg[i])
+		 if (i == 'mxr') IMUs.rArm.magn.x.record(msg[i])
+		 if (i == 'myr') IMUs.rArm.magn.y.record(msg[i])
+		 if (i == 'mzr') IMUs.rArm.magn.z.record(msg[i])
 
 		if (i == 'r') pins.lArm.setColor({r: msg[i] * 255})
 		if (i == 'g') pins.lArm.setColor({g: msg[i] * 255})
