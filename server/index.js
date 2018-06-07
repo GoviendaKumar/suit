@@ -67,7 +67,7 @@ let States = (params => {
 	gzl : {arduino : '/l0gz'},
 	mxl : {arduino : '/l0mx'},
 	myl : {arduino : '/l0my'},
-	mxl : {arduino : '/l0mz'},
+	mzl : {arduino : '/l0mz'},
 
 	axr : {arduino : '/r0ax'},
 	ayr : {arduino : '/r0ay'},
@@ -77,7 +77,7 @@ let States = (params => {
 	gzr : {arduino : '/r0gz'},
 	mxr : {arduino : '/r0mx'},
 	myr : {arduino : '/r0my'},
-	mxr : {arduino : '/r0mz'},
+	mzr : {arduino : '/r0mz'},
 })
 
 // on connect
@@ -98,7 +98,7 @@ udpPort.on('bundle', (oscBundle, timeTag, info) => {
 		for (let i in States) {
 			if (address == States[i].arduino) {
 				sendToUi(i, args[0])
-				console.log(i, args[0])
+	  //	console.log(i, args[0])
 				break
 			}
 		}
