@@ -14,7 +14,7 @@ let pinList = []
 let cords = Cords()
 
 let pins = {
-	lArm 			: 0, rArm			 : 0,
+	lArm      : 0, rArm      : 0,
 	lRibs     : 0, rRibs     : 0,
 	lThigh    : 0, rThigh    : 0,
 	lFoot     : 0, rFoot     : 0,
@@ -51,7 +51,42 @@ let colorPicker = ColorPicker({
 	onColorChange (rgb) {
 		pinList.forEach(i => {
 			pins[i].setColor(rgb)
-			pins[i].sendToServer(rgb)
+			if (pins[i] == pins.lArm)
+			ipcRenderer.send('ui', {
+			  l0lr: rgb.r / 255,    l0lg: rgb.g / 255,    l0lb: rgb.b / 255,
+		  	l1lr: rgb.r / 255,    l1lg: rgb.g / 255,    l1lb: rgb.b / 255 })
+			if (pins[i] == pins.rArm)
+		  ipcRenderer.send('ui', {
+			  r0lr: rgb.r / 255,    r0lg: rgb.g / 255,    r0lb: rgb.b / 255,
+			  r1lr: rgb.r / 255,    r1lg: rgb.g / 255,    r1lb: rgb.b / 255 })
+			if (pins[i] == pins.lRibs)
+			ipcRenderer.send('ui', {
+			  l2lr: rgb.r / 255,    l2lg: rgb.g / 255,    l2lb: rgb.b / 255,
+				l3lr: rgb.r / 255,    l3lg: rgb.g / 255,    l3lb: rgb.b / 255,
+			  l4lr: rgb.r / 255,    l4lg: rgb.g / 255,    l4lb: rgb.b / 255 })
+			if (pins[i] == pins.rRibs)
+			ipcRenderer.send('ui', {
+				r2lr: rgb.r / 255,    r2lg: rgb.g / 255,    r2lb: rgb.b / 255,
+				r3lr: rgb.r / 255,    r3lg: rgb.g / 255,    r3lb: rgb.b / 255,
+				r4lr: rgb.r / 255,    r4lg: rgb.g / 255,    r4lb: rgb.b / 255 })
+			if (pins[i] == pins.lThigh)
+			ipcRenderer.send('ui', {
+			  l5lr: rgb.r / 255,    l5lg: rgb.g / 255,    l5lb: rgb.b / 255,
+				l6lr: rgb.r / 255,    l6lg: rgb.g / 255,    l6lb: rgb.b / 255,
+			  l7lr: rgb.r / 255,    l7lg: rgb.g / 255,    l7lb: rgb.b / 255 })
+			if (pins[i] == pins.rThigh)
+			ipcRenderer.send('ui', {
+				r5lr: rgb.r / 255,    r5lg: rgb.g / 255,    r5lb: rgb.b / 255,
+				r6lr: rgb.r / 255,    r6lg: rgb.g / 255,    r6lb: rgb.b / 255,
+				r7lr: rgb.r / 255,    r7lg: rgb.g / 255,    r7lb: rgb.b / 255 })
+			if (pins[i] == pins.lFoot)
+			ipcRenderer.send('ui', {
+				l8lr: rgb.r / 255,    l8lg: rgb.g / 255,    l8lb: rgb.b / 255,
+				l9lr: rgb.r / 255,    l9lg: rgb.g / 255,    l9lb: rgb.b / 255 })
+			if (pins[i] == pins.rFoot)
+			ipcRenderer.send('ui', {
+				r8lr: rgb.r / 255,    r8lg: rgb.g / 255,    r8lb: rgb.b / 255,
+				r9lr: rgb.r / 255,    r9lg: rgb.g / 255,    r9lb: rgb.b / 255 })				
 		})
 	}
 })
@@ -73,20 +108,6 @@ let vib = {
 	lArm : vibWidget({position: 'back', title: 'Back'})
 }
 
-// setInterval(() => {
-//  	let setTriplet = plot => {
-//  		plot.x.record(Math.random())
-//  		plot.y.record(Math.random())
-//  		plot.z.record(Math.random())
-//  	}
-//  	let setDevice = device => {
-// 		setTriplet(device.acc)
-// 		setTriplet(device.gyro)
-//  		setTriplet(device.magn)
-//  	}
-//  	for (let i in IMUs) setDevice(IMUs[i])
-//  }, 100)
-
 loop(() => {
 	for (let i in IMUs) IMUs[i].draw()
 	cords.draw(pinList, pins, colorPicker.wheel)
@@ -94,8 +115,7 @@ loop(() => {
 
 ipcRenderer.on('update', (event, msg) => {
 	for (let i in msg) {
-		 console.log(msg)
-	//	 if (i == 'vibro') IMUs.lArm.vibro.setState(msg[i])
+  // if (i == 'vibro') IMUs.lArm.vibro.setState(msg[i])
 
 		 if (i == 'axl') IMUs.lArm.acc.x.record(msg[i])
 		 if (i == 'ayl') IMUs.lArm.acc.y.record(msg[i])

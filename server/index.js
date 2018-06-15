@@ -59,25 +59,48 @@ let States = (params => {
 		midiMap : v => v/127
 	},
 
-	axl : {arduino : '/l0ax'},
-	ayl : {arduino : '/l0ay'},
-	azl : {arduino : '/l0az'},
-	gxl : {arduino : '/l0gx'},
-	gyl : {arduino : '/l0gy'},
-	gzl : {arduino : '/l0gz'},
-	mxl : {arduino : '/l0mx'},
-	myl : {arduino : '/l0my'},
-	mzl : {arduino : '/l0mz'},
+	//address matching for LEDS   Left and Right
+	l0lr : {arduino : '/l0lr'},    r0lr : {arduino : '/r0lr'},
+	l0lg : {arduino : '/l0lg'},    r0lg : {arduino : '/r0lg'},
+	l0lb : {arduino : '/l0lb'},    r0lb : {arduino : '/r0lb'},
+	l1lr : {arduino : '/l1lr'},    r1lr : {arduino : '/r1lr'},
+	l1lg : {arduino : '/l1lg'},    r1lg : {arduino : '/r1lg'},
+	l1lb : {arduino : '/l1lb'},    r1lb : {arduino : '/r1lb'},
+	l2lr : {arduino : '/l2lr'},    r2lr : {arduino : '/r2lr'},
+	l2lg : {arduino : '/l2lg'},    r2lg : {arduino : '/r2lg'},
+	l2lb : {arduino : '/l2lb'},    r2lb : {arduino : '/r2lb'},
+	l3lr : {arduino : '/l3lr'},    r3lr : {arduino : '/r3lr'},
+	l3lg : {arduino : '/l3lg'},    r3lg : {arduino : '/r3lg'},
+	l3lb : {arduino : '/l3lb'},    r3lb : {arduino : '/r3lb'},
+	l4lr : {arduino : '/l4lr'},    r4lr : {arduino : '/r4lr'},
+	l4lg : {arduino : '/l4lg'},    r4lg : {arduino : '/r4lg'},
+	l4lb : {arduino : '/l4lb'},    r4lb : {arduino : '/r4lb'},
+	l5lr : {arduino : '/l5lr'},    r5lr : {arduino : '/r5lr'},
+	l5lg : {arduino : '/l5lg'},    r5lg : {arduino : '/r5lg'},
+	l5lb : {arduino : '/l5lb'},    r5lb : {arduino : '/r5lb'},
+	l6lr : {arduino : '/l6lr'},    r6lr : {arduino : '/r6lr'},
+	l6lg : {arduino : '/l6lg'},    r6lg : {arduino : '/r6lg'},
+	l6lb : {arduino : '/l6lb'},    r6lb : {arduino : '/r6lb'},
+	l7lr : {arduino : '/l7lr'},    r7lr : {arduino : '/r7lr'},
+	l7lg : {arduino : '/l7lg'},    r7lg : {arduino : '/r7lg'},
+	l7lb : {arduino : '/l7lb'},    r7lb : {arduino : '/r7lb'},
+	l8lr : {arduino : '/l8lr'},    r8lr : {arduino : '/r8lr'},
+	l8lg : {arduino : '/l8lg'},    r8lg : {arduino : '/r8lg'},
+	l8lb : {arduino : '/l8lb'},    r8lb : {arduino : '/r8lb'},
+	l9lr : {arduino : '/l9lr'},    r9lr : {arduino : '/r9lr'},
+	l9lg : {arduino : '/l9lg'},    r9lg : {arduino : '/r9lg'},
+	l9lb : {arduino : '/l9lb'},    r9lb : {arduino : '/r9lb'},
 
-	axr : {arduino : '/r0ax'},
-	ayr : {arduino : '/r0ay'},
-	azr : {arduino : '/r0az'},
-	gxr : {arduino : '/r0gx'},
-	gyr : {arduino : '/r0gy'},
-	gzr : {arduino : '/r0gz'},
-	mxr : {arduino : '/r0mx'},
-	myr : {arduino : '/r0my'},
-	mzr : {arduino : '/r0mz'},
+//address matching for IMUs Left and Right
+	axl : {arduino : '/l0ax'},    axr : {arduino : '/r0ax'},
+	ayl : {arduino : '/l0ay'},    ayr : {arduino : '/r0ay'},
+	azl : {arduino : '/l0az'},    azr : {arduino : '/r0az'},
+	gxl : {arduino : '/l0gx'},    gxr : {arduino : '/r0gx'},
+	gyl : {arduino : '/l0gy'},    gyr : {arduino : '/r0gy'},
+	gzl : {arduino : '/l0gz'},    gzr : {arduino : '/r0gz'},
+	mxl : {arduino : '/l0mx'},    mxr : {arduino : '/r0mx'},
+	myl : {arduino : '/l0my'},    myr : {arduino : '/r0my'},
+	mzl : {arduino : '/l0mz'},    mzr : {arduino : '/r0mz'}
 })
 
 // on connect
@@ -104,11 +127,6 @@ udpPort.on('bundle', (oscBundle, timeTag, info) => {
 		}
 	})
 })
-
-// OSC error handling
-udpPort.on("error", function (error) {
-    console.log("An error occurred: ", error.message);
-});
 
 // on midi change
 midi.on('message', (time, data) => {
@@ -143,6 +161,10 @@ for (let i = 0; i < midi.getPortCount(); i ++) {
 	if (name.match('Numark iDJ Live II')) midi.openPort(i)
 }
 
+// OSC error handling
+udpPort.on("error", function (error) {
+    console.log("An error occurred: ", error.message);
+});
 // osc house work
 udpPort.open()
 

@@ -1,7 +1,6 @@
 
 import {map} from './helpers'
 import electron from 'electron'
-const ipcRenderer = electron.ipcRenderer
 
 export let Pin = ({
 	parent   = document.body,
@@ -15,6 +14,7 @@ export let Pin = ({
 	// event
 	pin.onmousedown = onClick
 	let rgb = {r: 0, g: 0, b: 0}
+
 	// interface
 	return {
 		pin,
@@ -31,13 +31,5 @@ export let Pin = ({
 			}
 			pin.style.backgroundColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`
 		},
-		sendToServer (rgb) {
-			console.log(rgb)
-			ipcRenderer.send('ui', {
-				r: rgb.r / 255,
-				g: rgb.g / 255,
-				b: rgb.b / 255
-			})
-		}
 	}
 }
