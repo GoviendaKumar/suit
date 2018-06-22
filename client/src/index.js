@@ -7,6 +7,7 @@ import {vibWidget} from './vibWidget'
 import {ColorPicker} from './ColorPicker'
 import {Pin} from './Pin'
 import {Cords} from './Cords'
+import {Button} from './Buttons'
 
 const ipcRenderer = electron.ipcRenderer
 
@@ -86,14 +87,29 @@ let colorPicker = ColorPicker({
 			if (pins[i] == pins.rFoot)
 			ipcRenderer.send('ui', {
 				r8lr: rgb.r / 255,    r8lg: rgb.g / 255,    r8lb: rgb.b / 255,
-				r9lr: rgb.r / 255,    r9lg: rgb.g / 255,    r9lb: rgb.b / 255 })				
+				r9lr: rgb.r / 255,    r9lg: rgb.g / 255,    r9lb: rgb.b / 255 })
 		})
 	}
 })
 
-document.body.onmousedown = e => {
+Button('Reset LEDs', 'reset')
+Button('Select All', 'allPins')
+Button('Ping', 'ping')
+
+document.querySelector('.reset').onclick = () => {
+	ipcRenderer.send('reset')
+  for (let i in pins) {
+		pins[i].setColor({r: 0, g: 0, b: 0})
+	}
+}
+
+document.querySelector('.allPins').onclick = () => {
 	pinList = []
 	for (let i in pins) pinList.push(i)
+}
+
+document.querySelector('.ping').onclick = () => {
+
 }
 
 colorPicker.setColor({r: 255, g: 255, b: 255})
