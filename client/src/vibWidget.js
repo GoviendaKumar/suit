@@ -1,7 +1,7 @@
 import electron from 'electron'
 const ipcRenderer = electron.ipcRenderer
 
-import {Button} from './Button'
+import {vibBut} from './Buttons'
 
 export let vibWidget = ({
 	parent = document.body,
@@ -14,7 +14,7 @@ export let vibWidget = ({
 	parent.appendChild(widget)
 	//widget.onclick = e => e.stopPropagation()
 	// button
-	let vibro = Button({
+	let vibro = vibBut({
 		parent: widget,
 		name : 'Vibrate',
 		onPress   () {ipcRenderer.send('ui', {vibro: 1})},
