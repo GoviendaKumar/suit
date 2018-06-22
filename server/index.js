@@ -106,7 +106,7 @@ let States = (params => {
 // on connect
 udpPort.on('ready', () => {
 	for (let i in States)
-		sendToArduino(States[i].arduino, States[i].value)
+	sendToArduino(States[i].arduino, States[i].value)
 })
 
 ipcMain.on('ready', (event, arg) => {
@@ -150,6 +150,13 @@ ipcMain.on('ui', (event, arg) => {
 		States[i].value = v
 		storage.set(i, v)
 		sendToArduino(States[i].arduino, v)
+	}
+})
+
+ipcMain.on('reset', () => {
+	for (let i in States) {
+		sendToArduino(States[i].arduino, 0)
+		sendToUi(i, 0)
 	}
 })
 
