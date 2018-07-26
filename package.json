@@ -33,7 +33,8 @@
   },
   "dependencies": {
     "midi": "^0.9.5",
-    "socket.io": "^2.0.4",
-    "osc": "2.2.0"
+    "osc": "2.2.0",
+    "quaternion": "^1.0.5",
+    "socket.io": "^2.0.4"
   }
 }
