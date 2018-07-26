@@ -11,6 +11,7 @@ let Graph = (cv, ct, color) => {
 			value.s = v
 			if (range.sMin > v) range.sMin = v
 			if (range.sMax < v) range.sMax = v
+
 		},
 		draw () {
 			// animate range
@@ -26,8 +27,8 @@ let Graph = (cv, ct, color) => {
 			buffer.forEach((v, i) => {
 				ct[i == 0? 'moveTo': 'lineTo'](
 					i * cv.width / (buffer.length - 1),
-					map(v, 
-						range.vMin, range.vMax, 
+					map(v,
+						range.vMin, range.vMax,
 						padding, cv.height-padding))
 			})
 			ct.strokeStyle = color
@@ -71,7 +72,7 @@ export let GraphXYZ = ({
 			z.draw()
 			// mask
 			let gradient = ct.createRadialGradient(
-				cv.width/2, cv.height/2, 0, 
+				cv.width/2, cv.height/2, 0,
 				cv.width/2, cv.height/2, cv.width/2)
 			let bg = 'hsla(200, 15%, 7%, 1)'
 			let to = 'hsla(200, 15%, 7%, 0)'
