@@ -9,6 +9,10 @@ import {Pin} from './Pin'
 import {Cords} from './Cords'
 import {Button} from './Buttons'
 
+var Quaternion = require('quaternion')
+var q = new Quaternion("99.3+8i")
+console.log(q)
+
 const ipcRenderer = electron.ipcRenderer
 
 let pinList = []
@@ -95,6 +99,13 @@ let colorPicker = ColorPicker({
 Button('Reset LEDs', 'reset')
 Button('Select All', 'allPins')
 Button('Ping', 'ping')
+Button('calibrate', 'calibrate')
+Button('Enable vj', 'evj')
+Button('Disable vj', 'dvj')
+Button('Enable Auto', 'auto')
+Button('Disable Auto', 'manual')
+Button('Left Pattern', 'lpattern')
+Button('Right Pattern', 'rpattern')
 
 document.querySelector('.reset').onclick = () => {
 	ipcRenderer.send('reset')
@@ -102,14 +113,33 @@ document.querySelector('.reset').onclick = () => {
 		pins[i].setColor({r: 0, g: 0, b: 0})
 	}
 }
-
 document.querySelector('.allPins').onclick = () => {
 	pinList = []
 	for (let i in pins) pinList.push(i)
 }
-
 document.querySelector('.ping').onclick = () => {
-
+	ipcRenderer.send('ping')
+}
+document.querySelector('.calibrate').onclick = () => {
+	ipcRenderer.send('calibrate')
+}
+document.querySelector('.evj').onclick = () => {
+	ipcRenderer.send('vj', true)
+}
+document.querySelector('.dvj').onclick = () => {
+	ipcRenderer.send('vj', false)
+}
+document.querySelector('.auto').onclick = () => {
+	ipcRenderer.send('auto', true)
+}
+document.querySelector('.manual').onclick = () => {
+	ipcRenderer.send('auto', false)
+}
+document.querySelector('.lpattern').onclick = () => {
+	ipcRenderer.send('pattern', 'left')
+}
+document.querySelector('.rpattern').onclick = () => {
+	ipcRenderer.send('pattern', 'right')
 }
 
 colorPicker.setColor({r: 255, g: 255, b: 255})
@@ -129,9 +159,34 @@ loop(() => {
 	cords.draw(pinList, pins, colorPicker.wheel)
 })
 
+let con = true
+let con1 = true
+
+ipcRenderer.on('connected', (event, msg) => {
+	if (con) {
+		document.body.style.backgroundImage = "url('./graphic/bodyg.png')"
+		con = false
+		con1 = true
+	}
+})
+
+ipcRenderer.on('disconnected', (event, msg) => {
+	if (con1) {
+		document.body.style.backgroundImage = "url('./graphic/body.png')"
+		con1 = false
+		con = true
+	}
+})
+
+ipcRenderer.on('ping', (event, msg) => {
+	document.body.style.backgroundImage = "url('./graphic/bodyr.png')"
+	con = true
+	con1 = true
+})
+
 ipcRenderer.on('update', (event, msg) => {
 	for (let i in msg) {
-  // if (i == 'vibro') IMUs.lArm.vibro.setState(msg[i])
+		 //if (i == 'vibro') IMUs.lArm.vibro.setState(msg[i])
 
 		 if (i == 'axl') IMUs.lArm.acc.x.record(msg[i])
 		 if (i == 'ayl') IMUs.lArm.acc.y.record(msg[i])
@@ -163,11 +218,8 @@ ipcRenderer.on('update', (event, msg) => {
 				let set = false
 				if (!set) {
 					colorPicker.setColor({})
-					set = true
-				}
-			}
-		})
-	}
+					set = true }}})
+	 }
 })
 
 ipcRenderer.send('ready')
