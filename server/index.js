@@ -193,6 +193,11 @@ midi.on('message', (time, data) => {
 	}
 })
 
+let pixwalk = false
+ipcMain.on('walk', (event, arg) => {
+	pixwalk = arg
+})
+
 let rgb = { ls: {r: 0, g: 0, b: 0}, rs: {r: 0, g: 0, b: 0}}
 // on ui change
 ipcMain.on('ui', (event, arg) => {
@@ -200,11 +205,17 @@ ipcMain.on('ui', (event, arg) => {
 		let v = arg[i]
 		ledAddr[i].value = v
 		storage.set(i, v)
-		sendToArduino(ledAddr[i].arduino, v)
-		// if (i == 'l0lr') rgb.ls.r = rgb.rs.r = v
-		// if (i == 'l0lg') rgb.ls.g = rgb.rs.g = v
-		// if (i == 'l0lb') rgb.ls.b = rgb.rs.b = v
-		// colorflow(rgb, 'both', true)
+		if(pixwalk){
+			if (i == 'l0lr') rgb.ls.r = v
+			if (i == 'l0lg') rgb.ls.g = v
+			if (i == 'l0lb') rgb.ls.b = v
+			if (i == 'l0lr') colorflow(rgb, 'left', true)
+			if (i == 'r0lr') rgb.rs.r = v
+			if (i == 'r0lg') rgb.rs.g = v
+			if (i == 'r0lb') rgb.rs.b = v
+			if (i == 'r0lr') colorflow(rgb, 'right', true)
+		}
+		else sendToArduino(ledAddr[i].arduino, v)
 	}
 })
 
@@ -224,10 +235,6 @@ ipcMain.on('calibrate' , () => {
 })
 ipcMain.on('auto', (event, arg) => {
 	auto = arg
-})
-
-ipcMain.on('pattern', (event, side) => {
-	//colorflow(side)
 })
 
 // midi house work
