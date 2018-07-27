@@ -20,7 +20,6 @@ let imuR = {
 }
 
 let normalize = (adr, arg) => {
-	console.log(adr,arg);
 	if (adr == '/l0ax'){
 
 		if(l1){
