@@ -5,7 +5,7 @@ let lr = l1 = l2 = l3 = l4 = l5 = l6 = l7 = l8 = l9 = r1 = r2 = r3 = r4 = r5 = r
 let lact = ract = 0
 let l0lr = l0lg = l0lb = r0lr = r0lg = r0lb = 0
 let a = auto = false
-let c = calibrate = false
+let c = range = true
 let rgb = { ls: {r: 0, g: 0, b: 0}, rs: {r: 0, g: 0, b: 0}}
 
 let imuL = {
@@ -21,13 +21,12 @@ let imuR = {
 
 let normalize = (adr, arg) => {
 	if (adr == '/l0ax'){
-
 		if(l1){
-			imuL.a.x.min = arg-1
-		  imuL.a.x.max = arg+1
+			imuL.a.x.min = arg-0.1
+		  imuL.a.x.max = arg+0.1
 		  l1 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuL.a.x.min > arg) imuL.a.x.min = arg
 			if (imuL.a.x.max < arg) imuL.a.x.max = arg
 		}
@@ -48,11 +47,11 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/l0ay'){
 		if(l2){
-			imuL.a.y.min = arg-1
-			imuL.a.y.max = arg+1
+			imuL.a.y.min = arg-0.1
+			imuL.a.y.max = arg+0.1
 			l2 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuL.a.y.min > arg) imuL.a.y.min = arg
 			if (imuL.a.y.max < arg) imuL.a.y.max = arg
 		}
@@ -64,11 +63,11 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/l0az'){
 		if(l3){
-			imuL.a.z.min = arg-1
-			imuL.a.z.max = arg+1
+			imuL.a.z.min = arg-0.1
+			imuL.a.z.max = arg+0.1
 			l3 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuL.a.z.min > arg) imuL.a.z.min = arg
 			if (imuL.a.z.max < arg) imuL.a.z.max = arg
 		}
@@ -80,11 +79,11 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/l0gx'){
 		if(l4){
-			imuL.g.x.min = arg-1
-			imuL.g.x.max = arg+1
+			imuL.g.x.min = arg-0.1
+			imuL.g.x.max = arg+0.1
 			l4 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuL.g.x.min > arg) imuL.g.x.min = arg
 			if (imuL.g.x.max < arg) imuL.g.x.max = arg
 		}
@@ -94,11 +93,11 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/l0gy'){
 		if(l5){
-			imuL.g.y.min = arg-1
-			imuL.g.y.max = arg+1
+			imuL.g.y.min = arg-0.1
+			imuL.g.y.max = arg+0.1
 			l5 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuL.g.y.min > arg) imuL.g.y.min = arg
 			if (imuL.g.y.max < arg) imuL.g.y.max = arg
 		}
@@ -108,11 +107,11 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/l0gz'){
 		if(l6){
-			imuL.g.z.min = arg-1
-			imuL.g.z.max = arg+1
+			imuL.g.z.min = arg-0.1
+			imuL.g.z.max = arg+0.1
 			l6 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuL.g.z.min > arg) imuL.g.z.min = arg
 			if (imuL.g.z.max < arg) imuL.g.z.max = arg
 		}
@@ -121,11 +120,11 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/l0mx'){
 		if(l7){
-			imuL.m.x.min = arg-1
-		  imuL.m.x.max = arg+1
+			imuL.m.x.min = arg-0.1
+		  imuL.m.x.max = arg+0.1
 		  l7 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuL.m.x.min > arg) imuL.m.x.min = arg
 			if (imuL.m.x.max < arg) imuL.m.x.max = arg
 		}
@@ -135,11 +134,11 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/l0my'){
 		if(l8){
-			imuL.m.y.min = arg-1
-			imuL.m.y.max = arg+1
+			imuL.m.y.min = arg-0.1
+			imuL.m.y.max = arg+0.1
 			l8 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuL.m.y.min > arg) imuL.m.y.min = arg
 			if (imuL.m.y.max < arg) imuL.m.y.max = arg
 		}
@@ -149,11 +148,11 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/l0mz'){
 		if(l9){
-			imuL.m.z.min = arg-1
-			imuL.m.z.max = arg+1
+			imuL.m.z.min = arg-0.1
+			imuL.m.z.max = arg+0.1
 			l9 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuL.m.z.min > arg) imuL.m.z.min = arg
 			if (imuL.m.z.max < arg) imuL.m.z.max = arg
 		}
@@ -165,11 +164,11 @@ let normalize = (adr, arg) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/r0ax'){
 		if(r1){
-			imuR.a.x.min = arg-1
-			imuR.a.x.max = arg+1
+			imuR.a.x.min = arg-0.1
+			imuR.a.x.max = arg+0.1
 			r1 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuR.a.x.min > arg) imuR.a.x.min = arg
 			if (imuR.a.x.max < arg) imuR.a.x.max = arg
 		}
@@ -190,14 +189,13 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/r0ay'){
 		if(r2){
-			imuR.a.y.min = arg-1
-			imuL.a.y.max = arg+1
+			imuR.a.y.min = arg-0.1
+			imuL.a.y.max = arg+0.1
 			r2 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuR.a.y.min > arg) imuR.a.y.min = arg
-			if (imuR.a.y.max < arg) imuR.a.y.max = arg
-		}
+			if (imuR.a.y.max < arg) imuR.a.y.max = arg		}
 		imuR.a.y.v = Math.round(((arg - imuR.a.y.min) * 100)/(imuR.a.y.max - imuR.a.y.min))
 		sendToUi('ayr', imuR.a.y.v)
 		sendTovj('/r0ay', imuR.a.y.v)
@@ -206,11 +204,11 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/r0az'){
 		if(r3){
-			imuR.a.z.min = arg-1
-			imuR.a.z.max = arg+1
+			imuR.a.z.min = arg-0.1
+			imuR.a.z.max = arg+0.1
 			r3 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuR.a.z.min > arg) imuR.a.z.min = arg
 			if (imuR.a.z.max < arg) imuR.a.z.max = arg
 		}
@@ -222,11 +220,11 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/r0gx'){
 		if(r4){
-			imuR.g.x.min = arg-1
-			imuR.g.x.max = arg+1
+			imuR.g.x.min = arg-0.1
+			imuR.g.x.max = arg+0.1
 			r4 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuR.g.x.min > arg) imuR.g.x.min = arg
 			if (imuR.g.x.max < arg) imuR.g.x.max = arg
 		}
@@ -236,11 +234,11 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/r0gy'){
 		if(r5){
-			imuR.g.y.min = arg-1
-			imuR.g.y.max = arg+1
+			imuR.g.y.min = arg-0.1
+			imuR.g.y.max = arg+0.1
 			r5 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuR.g.y.min > arg) imuR.g.y.min = arg
 			if (imuR.g.y.max < arg) imuR.g.y.max = arg
 		}
@@ -250,11 +248,11 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/r0gz'){
 		if(r6){
-			imuR.g.z.min = arg-1
-			imuR.g.z.max = arg+1
+			imuR.g.z.min = arg-0.1
+			imuR.g.z.max = arg+0.1
 			r6 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuR.g.z.min > arg) imuR.g.z.min = arg
 			if (imuR.g.z.max < arg) imuR.g.z.max = arg
 		}
@@ -264,11 +262,11 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/r0mx'){
 		if(r7){
-			imuR.m.x.min = arg-1
-			imuR.m.x.max = arg+1
+			imuR.m.x.min = arg-0.1
+			imuR.m.x.max = arg+0.1
 			r7 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuR.m.x.min > arg) imuR.m.x.min = arg
 			if (imuR.m.x.max < arg) imuR.m.x.max = arg
 		}
@@ -278,11 +276,11 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/r0my'){
 		if(r8){
-			imuR.m.y.min = arg-1
-			imuR.m.y.max = arg+1
+			imuR.m.y.min = arg-0.1
+			imuR.m.y.max = arg+0.1
 			r8 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuR.m.y.min > arg) imuR.m.y.min = arg
 			if (imuR.m.y.max < arg) imuR.m.y.max = arg
 		}
@@ -292,11 +290,11 @@ let normalize = (adr, arg) => {
 	}
 	if (adr == '/r0mz'){
 		if(r9){
-			imuR.m.z.min = arg-1
-			imuR.m.z.max = arg+1
+			imuR.m.z.min = arg-0.1
+			imuR.m.z.max = arg+0.1
 			r9 = false
 		}
-		if(calibrate){
+		if(range){
 			if (imuR.m.z.min > arg) imuR.m.z.min = arg
 			if (imuR.m.z.max < arg) imuR.m.z.max = arg
 		}
