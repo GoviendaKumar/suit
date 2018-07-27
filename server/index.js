@@ -30,10 +30,10 @@ sendToArduino = (address, args) => {
 		'192.168.1.123', 8000)
 }
 
-  sendTovj = (address, args) => {
-	 extPort.send({address, args},
-	 	'192.168.1.124', 7001)
-  }
+sendTovj = (address, args) => {
+ 	extPort.send({address, args},
+	 	'192.168.2.6', 5000)
+}
 
 sendToUi = (key, value) => {
 	let win = BrowserWindow.getAllWindows()
@@ -157,6 +157,12 @@ let vj = true
 ipcMain.on('vj', (event, arg) => {
 	vj = arg
 })
+
+let raw = false
+ipcMain.on('raw', (event, arg) => {
+	raw = arg
+})
+
 extPort.on("message", (oscMsg) => {
 	for (let i in ledAddr) {
 		if (vj && oscMsg.address == ledAddr[i].arduino)
@@ -171,8 +177,13 @@ udpPort.on('bundle', (oscBundle, timeTag, info) => {
 		let {address, args} = packet
 		for (let i in imuAddr) {
 			if (address == imuAddr[i].arduino) {
-				//sendToUi(i, args[0])
-				normalize(imuAddr[i].arduino, args[0])
+				if(raw)
+				 {
+					 sendToUi(i, args[0])
+				 	 sendTovj(imuAddr[i].arduino, args[0])
+				 }
+				else
+				 normalize(imuAddr[i].arduino, args[0])
 				break
 			}
 		}
@@ -229,9 +240,10 @@ ipcMain.on('ping', () => {
 	sendToArduino('/ping')
 })
 ipcMain.on('calibrate' , () => {
-	calibrate = true
 	lr = l1 = l2 = l3 = l4 = l5 = l6 = l7 = l8 = l9 = r1 = r2 = r3 = r4 = r5 = r6 = r7 = r8 = r9 = true
-	setTimeout(function(){calibrate = false}, 10000)
+})
+ipcMain.on('range', (event, arg) => {
+	range = arg
 })
 ipcMain.on('auto', (event, arg) => {
 	auto = arg
