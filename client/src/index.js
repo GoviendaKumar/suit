@@ -102,7 +102,7 @@ Button('Ping', 'ping')
 Button('calibrate', 'calibrate')
 Button('VJ Disabled', 'evj')
 Button('Auto Disabled', 'auto')
-Button('PixWalk Enabled', 'pixwalk')
+Button('PixWalk Disabled', 'pixwalk')
 
 document.querySelector('.reset').onclick = () => {
 	ipcRenderer.send('reset')
