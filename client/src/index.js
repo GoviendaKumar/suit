@@ -100,12 +100,9 @@ Button('Reset LEDs', 'reset')
 Button('Select All', 'allPins')
 Button('Ping', 'ping')
 Button('calibrate', 'calibrate')
-Button('Enable vj', 'evj')
-Button('Disable vj', 'dvj')
-Button('Enable Auto', 'auto')
-Button('Disable Auto', 'manual')
-Button('Left Pattern', 'lpattern')
-Button('Right Pattern', 'rpattern')
+Button('VJ Disabled', 'evj')
+Button('Auto Disabled', 'auto')
+Button('PixWalk Enabled', 'pixwalk')
 
 document.querySelector('.reset').onclick = () => {
 	ipcRenderer.send('reset')
@@ -123,23 +120,47 @@ document.querySelector('.ping').onclick = () => {
 document.querySelector('.calibrate').onclick = () => {
 	ipcRenderer.send('calibrate')
 }
+
+let vj = 0
 document.querySelector('.evj').onclick = () => {
-	ipcRenderer.send('vj', true)
+	if (vj == 0){
+		vj = 1
+		ipcRenderer.send('vj', true)
+		document.querySelector('.evj').value = "VJ Enabled"
+	}
+	else {
+		vj = 0
+		ipcRenderer.send('vj', false)
+		document.querySelector('.evj').value = "VJ Disabled"
+	}
 }
-document.querySelector('.dvj').onclick = () => {
-	ipcRenderer.send('vj', false)
-}
+
+let aut = 0
 document.querySelector('.auto').onclick = () => {
-	ipcRenderer.send('auto', true)
+	if (aut == 0){
+		aut = 1
+		ipcRenderer.send('auto', true)
+		document.querySelector('.auto').value = "Auto Enabled"
+	}
+	else {
+		aut = 0
+		ipcRenderer.send('auto', false)
+		document.querySelector('.auto').value = "Auto Disabled"
+	}
 }
-document.querySelector('.manual').onclick = () => {
-	ipcRenderer.send('auto', false)
-}
-document.querySelector('.lpattern').onclick = () => {
-	ipcRenderer.send('pattern', 'left')
-}
-document.querySelector('.rpattern').onclick = () => {
-	ipcRenderer.send('pattern', 'right')
+
+let walk = 0
+document.querySelector('.pixwalk').onclick = () => {
+	if (walk == 0){
+		walk = 1
+		ipcRenderer.send('walk', true)
+		document.querySelector('.pixwalk').value = "PixWalk Enabled"
+	}
+	else {
+		walk = 0
+		ipcRenderer.send('walk', false)
+		document.querySelector('.pixwalk').value = "PixWalk Disabled"
+	}
 }
 
 colorPicker.setColor({r: 255, g: 255, b: 255})
