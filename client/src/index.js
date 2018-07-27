@@ -97,12 +97,14 @@ let colorPicker = ColorPicker({
 })
 
 Button('Reset LEDs', 'reset')
-Button('Select All', 'allPins')
-Button('Ping', 'ping')
-Button('calibrate', 'calibrate')
+Button('  Select All  ', 'allPins')
+Button('      Ping      ', 'ping')
+Button('  calibrate   ', 'calibrate')
 Button('VJ Disabled', 'evj')
-Button('Auto Disabled', 'auto')
-Button('PixWalk Disabled', 'pixwalk')
+Button('   Auto Disabled    ', 'auto')
+Button(' PixWalk Disabled ', 'pixwalk')
+Button('Normalized Values', 'raw')
+Button('Continuous Range', 'range')
 
 document.querySelector('.reset').onclick = () => {
 	ipcRenderer.send('reset')
@@ -126,7 +128,7 @@ document.querySelector('.evj').onclick = () => {
 	if (vj == 0){
 		vj = 1
 		ipcRenderer.send('vj', true)
-		document.querySelector('.evj').value = "VJ Enabled"
+		document.querySelector('.evj').value = "VJ Enabled "
 	}
 	else {
 		vj = 0
@@ -140,12 +142,12 @@ document.querySelector('.auto').onclick = () => {
 	if (aut == 0){
 		aut = 1
 		ipcRenderer.send('auto', true)
-		document.querySelector('.auto').value = "Auto Enabled"
+		document.querySelector('.auto').value = "   Auto Enabled     "
 	}
 	else {
 		aut = 0
 		ipcRenderer.send('auto', false)
-		document.querySelector('.auto').value = "Auto Disabled"
+		document.querySelector('.auto').value = "   Auto Disabled    "
 	}
 }
 
@@ -154,12 +156,40 @@ document.querySelector('.pixwalk').onclick = () => {
 	if (walk == 0){
 		walk = 1
 		ipcRenderer.send('walk', true)
-		document.querySelector('.pixwalk').value = "PixWalk Enabled"
+		document.querySelector('.pixwalk').value = " PixWalk Enabled  "
 	}
 	else {
 		walk = 0
 		ipcRenderer.send('walk', false)
-		document.querySelector('.pixwalk').value = "PixWalk Disabled"
+		document.querySelector('.pixwalk').value = " PixWalk Disabled "
+	}
+}
+
+let raw = 0
+document.querySelector('.raw').onclick = () => {
+	if (raw == 0){
+		raw = 1
+		ipcRenderer.send('raw', true)
+		document.querySelector('.raw').value = "      Raw Values     "
+	}
+	else {
+		raw = 0
+		ipcRenderer.send('raw', false)
+		document.querySelector('.raw').value = "Normalized Values"
+	}
+}
+
+let range = 1
+document.querySelector('.range').onclick = () => {
+	if (range == 1){
+		range = 0
+		ipcRenderer.send('range', false)
+		document.querySelector('.range').value = "     Fixed Range    "
+	}
+	else {
+		range = 1
+		ipcRenderer.send('range', true)
+		document.querySelector('.range').value = "Continuous Range"
 	}
 }
 
