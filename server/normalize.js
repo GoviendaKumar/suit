@@ -34,7 +34,7 @@ let normalize = (adr, arg) => {
 		sendToUi('axl', imuL.a.x.v)
 		sendTovj('/l0ax', imuL.a.x.v)
 		if (auto){
-		  l0lr = Math.round(((arg - imuL.a.x.min) * 255)/(imuL.a.x.max - imuL.a.x.min))
+		  l0lr = (arg - imuL.a.x.min)/(imuL.a.x.max - imuL.a.x.min)
 			if(lact == 5){
 				rgb.ls.r = l0lr
 				rgb.ls.g = l0lg
@@ -44,7 +44,7 @@ let normalize = (adr, arg) => {
 			}
 			lact++
 		}
-	}
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/l0ay'){
 		if(l2){
 			imuL.a.y.min = arg-0.1
@@ -59,8 +59,8 @@ let normalize = (adr, arg) => {
 		sendToUi('ayl', imuL.a.y.v)
 		sendTovj('/l0ay', imuL.a.y.v)
 		if (auto)
-			l0lg = Math.round(((arg - imuL.a.y.min) * 255)/(imuL.a.y.max - imuL.a.y.min))
-	}
+			l0lg = (arg - imuL.a.y.min)/(imuL.a.y.max - imuL.a.y.min)
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/l0az'){
 		if(l3){
 			imuL.a.z.min = arg-0.1
@@ -75,8 +75,8 @@ let normalize = (adr, arg) => {
 		sendToUi('azl', imuL.a.z.v)
 		sendTovj('/l0az', imuL.a.z.v)
 		if (auto)
-			l0lb = Math.round(((arg - imuL.a.z.min) * 255)/(imuL.a.z.max - imuL.a.z.min))
-	}
+			l0lb = (arg - imuL.a.z.min)/(imuL.a.z.max - imuL.a.z.min)
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/l0gx'){
 		if(l4){
 			imuL.g.x.min = arg-0.1
@@ -90,7 +90,7 @@ let normalize = (adr, arg) => {
 		imuL.g.x.v = Math.round(((arg - imuL.g.x.min) * 100)/(imuL.g.x.max - imuL.g.x.min))
 		sendToUi('gxl', imuL.g.x.v)
 		sendTovj('/l0gx', imuL.g.x.v)
-	}
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/l0gy'){
 		if(l5){
 			imuL.g.y.min = arg-0.1
@@ -104,7 +104,7 @@ let normalize = (adr, arg) => {
 		imuL.g.y.v = Math.round(((arg - imuL.g.y.min) * 100)/(imuL.g.y.max - imuL.g.y.min))
 		sendToUi('gyl', imuL.g.y.v)
 		sendTovj('/l0gy', imuL.g.x.v)
-	}
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/l0gz'){
 		if(l6){
 			imuL.g.z.min = arg-0.1
@@ -117,7 +117,7 @@ let normalize = (adr, arg) => {
 		}
 		imuL.g.z.v = Math.round(((arg - imuL.g.z.min) * 100)/(imuL.g.z.max - imuL.g.z.min))
 		sendToUi('gzl', imuL.g.z.v)
-	}
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/l0mx'){
 		if(l7){
 			imuL.m.x.min = arg-0.1
@@ -131,7 +131,7 @@ let normalize = (adr, arg) => {
 		imuL.m.x.v = Math.round(((arg - imuL.m.x.min) * 100)/(imuL.m.x.max - imuL.m.x.min))
 		sendToUi('mxl', imuL.m.x.v)
 		sendTovj('/l0mx', imuL.m.x.v)
-	}
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/l0my'){
 		if(l8){
 			imuL.m.y.min = arg-0.1
@@ -145,7 +145,7 @@ let normalize = (adr, arg) => {
 		imuL.m.y.v = Math.round(((arg - imuL.m.y.min) * 100)/(imuL.m.y.max - imuL.m.y.min))
 		sendToUi('myl', imuL.m.y.v)
 		sendTovj('/l0my', imuL.m.y.v)
-	}
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/l0mz'){
 		if(l9){
 			imuL.m.z.min = arg-0.1
@@ -161,6 +161,7 @@ let normalize = (adr, arg) => {
 		sendTovj('/l0mz', imuL.m.z.v)
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/r0ax'){
 		if(r1){
@@ -176,7 +177,7 @@ let normalize = (adr, arg) => {
 		sendToUi('axr', imuR.a.x.v)
 		sendTovj('/r0ax', imuR.a.x.v)
 		if (auto){
-			r0lr = Math.round(((arg - imuR.a.x.min) * 255)/(imuR.a.x.max - imuR.a.x.min))
+			r0lr = (arg - imuR.a.x.min)/(imuR.a.x.max - imuR.a.x.min)
 			if (ract == 5){
 				rgb.rs.r = r0lr
 				rgb.rs.g = r0lg
@@ -186,7 +187,7 @@ let normalize = (adr, arg) => {
 			}
 			ract++
 		}
-	}
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/r0ay'){
 		if(r2){
 			imuR.a.y.min = arg-0.1
@@ -200,8 +201,8 @@ let normalize = (adr, arg) => {
 		sendToUi('ayr', imuR.a.y.v)
 		sendTovj('/r0ay', imuR.a.y.v)
 		if (auto)
-			r0lg = Math.round(((arg - imuR.a.y.min) * 255)/(imuR.a.y.max - imuR.a.y.min))
-	}
+			r0lg = (arg - imuR.a.y.min)/(imuR.a.y.max - imuR.a.y.min)
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/r0az'){
 		if(r3){
 			imuR.a.z.min = arg-0.1
@@ -216,8 +217,8 @@ let normalize = (adr, arg) => {
 		sendToUi('azr', imuR.a.z.v)
 		sendTovj('/r0az', imuR.a.z.v)
 		if (auto)
-			r0lb = Math.round(((arg - imuR.a.z.min) * 255)/(imuR.a.z.max - imuR.a.z.min))
-	}
+			r0lb = (arg - imuR.a.z.min)/(imuR.a.z.max - imuR.a.z.min)
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/r0gx'){
 		if(r4){
 			imuR.g.x.min = arg-0.1
@@ -231,7 +232,7 @@ let normalize = (adr, arg) => {
 		imuR.g.x.v = Math.round(((arg - imuR.g.x.min) * 100)/(imuR.g.x.max - imuR.g.x.min))
 		sendToUi('gxr', imuR.g.x.v)
 		sendTovj('/r0gx', imuR.g.x.v)
-	}
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/r0gy'){
 		if(r5){
 			imuR.g.y.min = arg-0.1
@@ -245,7 +246,7 @@ let normalize = (adr, arg) => {
 		imuR.g.y.v = Math.round(((arg - imuR.g.y.min) * 100)/(imuR.g.y.max - imuR.g.y.min))
 		sendToUi('gyr', imuR.g.y.v)
 		sendTovj('/r0gy', imuR.g.y.v)
-	}
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/r0gz'){
 		if(r6){
 			imuR.g.z.min = arg-0.1
@@ -259,7 +260,7 @@ let normalize = (adr, arg) => {
 		imuR.g.z.v = Math.round(((arg - imuR.g.z.min) * 100)/(imuR.g.z.max - imuR.g.z.min))
 		sendToUi('gzr', imuR.g.z.v)
 		sendTovj('/r0gz', imuR.g.z.v)
-	}
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/r0mx'){
 		if(r7){
 			imuR.m.x.min = arg-0.1
@@ -273,7 +274,7 @@ let normalize = (adr, arg) => {
 		imuR.m.x.v = Math.round(((arg - imuR.m.x.min) * 100)/(imuR.m.x.max - imuR.m.x.min))
 		sendToUi('mxr', imuR.m.x.v)
 		sendTovj('/r0mx', imuR.m.x.v)
-	}
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/r0my'){
 		if(r8){
 			imuR.m.y.min = arg-0.1
@@ -287,7 +288,7 @@ let normalize = (adr, arg) => {
 		imuR.m.y.v = Math.round(((arg - imuR.m.y.min) * 100)/(imuR.m.y.max - imuR.m.y.min))
 		sendToUi('myr', imuR.m.y.v)
 		sendTovj('/r0my', imuR.m.y.v)
-	}
+	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/r0mz'){
 		if(r9){
 			imuR.m.z.min = arg-0.1
