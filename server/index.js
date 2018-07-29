@@ -26,13 +26,15 @@ var extPort = new OSC.UDPPort({
 })
 
 sendToArduino = (address, args) => {
+	//console.log(address, args)
 	udpPort.send({address, args},
 		'192.168.1.123', 8000)
 }
 
 sendTovj = (address, args) => {
+	//console.log(address, args)
  	extPort.send({address, args},
-	 	'192.168.2.6', 5000)
+	 	'192.168.1.6', 5000)
 }
 
 sendToUi = (key, value) => {
@@ -153,7 +155,7 @@ udpPort.on("message", (oscMsg) => {
 	if (oscMsg.address == '/ping') sendToUi(0, 'ping')
 })
 
-let vj = true
+let vj = false
 ipcMain.on('vj', (event, arg) => {
 	vj = arg
 })
@@ -164,8 +166,10 @@ ipcMain.on('raw', (event, arg) => {
 })
 
 extPort.on("message", (oscMsg) => {
+	//console.log(oscMsg.address, oscMsg.args)
 	for (let i in ledAddr) {
 		if (vj && oscMsg.address == ledAddr[i].arduino)
+
 			sendToArduino(oscMsg.address, oscMsg.args)
 	}
 })
