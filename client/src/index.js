@@ -58,40 +58,28 @@ let colorPicker = ColorPicker({
 			pins[i].setColor(rgb)
 			if (pins[i] == pins.lArm)
 			ipcRenderer.send('ui', {
-			  l0lr: rgb.r / 255,    l0lg: rgb.g / 255,    l0lb: rgb.b / 255,
-		  	l1lr: rgb.r / 255,    l1lg: rgb.g / 255,    l1lb: rgb.b / 255 })
+			  l0lr: rgb.r,    l0lg: rgb.g,    l0lb: rgb.b})
 			if (pins[i] == pins.rArm)
 		  ipcRenderer.send('ui', {
-			  r0lr: rgb.r / 255,    r0lg: rgb.g / 255,    r0lb: rgb.b / 255,
-			  r1lr: rgb.r / 255,    r1lg: rgb.g / 255,    r1lb: rgb.b / 255 })
+			  r0lr: rgb.r,    r0lg: rgb.g,    r0lb: rgb.b})
 			if (pins[i] == pins.lRibs)
 			ipcRenderer.send('ui', {
-			  l2lr: rgb.r / 255,    l2lg: rgb.g / 255,    l2lb: rgb.b / 255,
-				l3lr: rgb.r / 255,    l3lg: rgb.g / 255,    l3lb: rgb.b / 255,
-			  l4lr: rgb.r / 255,    l4lg: rgb.g / 255,    l4lb: rgb.b / 255 })
+			  l1lr: rgb.r,    l1lg: rgb.g,    l1lb: rgb.b})
 			if (pins[i] == pins.rRibs)
 			ipcRenderer.send('ui', {
-				r2lr: rgb.r / 255,    r2lg: rgb.g / 255,    r2lb: rgb.b / 255,
-				r3lr: rgb.r / 255,    r3lg: rgb.g / 255,    r3lb: rgb.b / 255,
-				r4lr: rgb.r / 255,    r4lg: rgb.g / 255,    r4lb: rgb.b / 255 })
+				r1lr: rgb.r,    r1lg: rgb.g,    r1lb: rgb.b})
 			if (pins[i] == pins.lThigh)
 			ipcRenderer.send('ui', {
-			  l5lr: rgb.r / 255,    l5lg: rgb.g / 255,    l5lb: rgb.b / 255,
-				l6lr: rgb.r / 255,    l6lg: rgb.g / 255,    l6lb: rgb.b / 255,
-			  l7lr: rgb.r / 255,    l7lg: rgb.g / 255,    l7lb: rgb.b / 255 })
+			  l2lr: rgb.r,    l2lg: rgb.g,    l2lb: rgb.b})
 			if (pins[i] == pins.rThigh)
 			ipcRenderer.send('ui', {
-				r5lr: rgb.r / 255,    r5lg: rgb.g / 255,    r5lb: rgb.b / 255,
-				r6lr: rgb.r / 255,    r6lg: rgb.g / 255,    r6lb: rgb.b / 255,
-				r7lr: rgb.r / 255,    r7lg: rgb.g / 255,    r7lb: rgb.b / 255 })
+				r2lr: rgb.r,    r2lg: rgb.g,    r2lb: rgb.b})
 			if (pins[i] == pins.lFoot)
 			ipcRenderer.send('ui', {
-				l8lr: rgb.r / 255,    l8lg: rgb.g / 255,    l8lb: rgb.b / 255,
-				l9lr: rgb.r / 255,    l9lg: rgb.g / 255,    l9lb: rgb.b / 255 })
+				l3lr: rgb.r,    l3lg: rgb.g,    l3lb: rgb.b})
 			if (pins[i] == pins.rFoot)
 			ipcRenderer.send('ui', {
-				r8lr: rgb.r / 255,    r8lg: rgb.g / 255,    r8lb: rgb.b / 255,
-				r9lr: rgb.r / 255,    r9lg: rgb.g / 255,    r9lb: rgb.b / 255 })
+				r3lr: rgb.r,    r3lg: rgb.g,    r3lb: rgb.b})
 		})
 	}
 })
