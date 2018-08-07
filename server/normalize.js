@@ -34,7 +34,7 @@ let normalize = (adr, arg) => {
 		sendToUi('axl', imuL.a.x.v)
 		sendTovj('/l0ax', imuL.a.x.v)
 		if (auto){
-		  l0lr = (arg - imuL.a.x.min)/(imuL.a.x.max - imuL.a.x.min)
+		  l0lr = Math.round(((arg - imuL.a.x.min) * 255)/(imuL.a.x.max - imuL.a.x.min))
 			if(lact == 5){
 				rgb.ls.r = l0lr
 				rgb.ls.g = l0lg
@@ -59,7 +59,7 @@ let normalize = (adr, arg) => {
 		sendToUi('ayl', imuL.a.y.v)
 		sendTovj('/l0ay', imuL.a.y.v)
 		if (auto)
-			l0lg = (arg - imuL.a.y.min)/(imuL.a.y.max - imuL.a.y.min)
+			l0lg = Math.round(((arg - imuL.a.y.min) * 255)/(imuL.a.y.max - imuL.a.y.min))
 	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/l0az'){
 		if(l3){
@@ -75,7 +75,7 @@ let normalize = (adr, arg) => {
 		sendToUi('azl', imuL.a.z.v)
 		sendTovj('/l0az', imuL.a.z.v)
 		if (auto)
-			l0lb = (arg - imuL.a.z.min)/(imuL.a.z.max - imuL.a.z.min)
+			l0lb = Math.round(((arg - imuL.a.z.min) * 255)/(imuL.a.z.max - imuL.a.z.min))
 	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/l0gx'){
 		if(l4){
@@ -177,7 +177,7 @@ let normalize = (adr, arg) => {
 		sendToUi('axr', imuR.a.x.v)
 		sendTovj('/r0ax', imuR.a.x.v)
 		if (auto){
-			r0lr = (arg - imuR.a.x.min)/(imuR.a.x.max - imuR.a.x.min)
+			r0lr = Math.round(((arg - imuR.a.x.min) * 255)/(imuR.a.x.max - imuR.a.x.min))
 			if (ract == 5){
 				rgb.rs.r = r0lr
 				rgb.rs.g = r0lg
@@ -201,7 +201,7 @@ let normalize = (adr, arg) => {
 		sendToUi('ayr', imuR.a.y.v)
 		sendTovj('/r0ay', imuR.a.y.v)
 		if (auto)
-			r0lg = (arg - imuR.a.y.min)/(imuR.a.y.max - imuR.a.y.min)
+			r0lg = Math.round(((arg - imuR.a.y.min) * 255)/(imuR.a.y.max - imuR.a.y.min))
 	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/r0az'){
 		if(r3){
@@ -217,7 +217,7 @@ let normalize = (adr, arg) => {
 		sendToUi('azr', imuR.a.z.v)
 		sendTovj('/r0az', imuR.a.z.v)
 		if (auto)
-			r0lb = (arg - imuR.a.z.min)/(imuR.a.z.max - imuR.a.z.min)
+			r0lb = Math.round(((arg - imuR.a.z.min) * 255)/(imuR.a.z.max - imuR.a.z.min))
 	}/////////////////////////////////////////////////////////////////////////////////////////
 	if (adr == '/r0gx'){
 		if(r4){
