@@ -54,7 +54,6 @@ boolean faderChanged = false;
 //NEO pixel init
 Adafruit_NeoPixel pixels1 = Adafruit_NeoPixel(NUMPIXELS, PIN_STRIPE_1, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel pixels2 = Adafruit_NeoPixel(NUMPIXELS, PIN_STRIPE_2, NEO_GRB + NEO_KHZ800);
-int delayval = 500; // delay for half a second
 
 //VIBRO
 const int vibro = VIBRO;

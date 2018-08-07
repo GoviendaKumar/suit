@@ -28,30 +28,6 @@ void receiveOSC(){
       msgIN.route("/l3lg",l3lg);
       msgIN.route("/l3lb",l3lb);
 
-      msgIN.route("/l4lr",l4lr);
-      msgIN.route("/l4lg",l4lg);
-      msgIN.route("/l4lb",l4lb);
-
-      msgIN.route("/l5lr",l5lr);
-      msgIN.route("/l5lg",l5lg);
-      msgIN.route("/l5lb",l5lb);
-
-      msgIN.route("/l6lr",l6lr);
-      msgIN.route("/l6lg",l6lg);
-      msgIN.route("/l6lb",l6lb);
-
-      msgIN.route("/l7lr",l7lr);
-      msgIN.route("/l7lg",l7lg);
-      msgIN.route("/l7lb",l7lb);
-
-      msgIN.route("/l8lr",l8lr);
-      msgIN.route("/l8lg",l8lg);
-      msgIN.route("/l8lb",l8lb);
-
-      msgIN.route("/l9lr",l9lr);
-      msgIN.route("/l9lg",l9lg);
-      msgIN.route("/l9lb",l9lb);
-
       //----------------RIGHT----------calling functions according to address received
       msgIN.route("/r0lr",r0lr);
       msgIN.route("/r0lg",r0lg);
@@ -68,30 +44,6 @@ void receiveOSC(){
       msgIN.route("/r3lr",r3lr);
       msgIN.route("/r3lg",r3lg);
       msgIN.route("/r3lb",r3lb);
-
-      msgIN.route("/r4lr",r4lr);
-      msgIN.route("/r4lg",r4lg);
-      msgIN.route("/r4lb",r4lb);
-
-      msgIN.route("/r5lr",r5lr);
-      msgIN.route("/r5lg",r5lg);
-      msgIN.route("/r5lb",r5lb);
-
-      msgIN.route("/r6lr",r6lr);
-      msgIN.route("/r6lg",r6lg);
-      msgIN.route("/r6lb",r6lb);
-
-      msgIN.route("/r7lr",r7lr);
-      msgIN.route("/r7lg",r7lg);
-      msgIN.route("/r7lb",r7lb);
-
-      msgIN.route("/r8lr",r8lr);
-      msgIN.route("/r8lg",r8lg);
-      msgIN.route("/r8lb",r8lb);
-
-      msgIN.route("/r9lr",r9lr);
-      msgIN.route("/r9lg",r9lg);
-      msgIN.route("/r9lb",r9lb);
     }
   }
 
@@ -108,10 +60,6 @@ void receiveOSC(){
   pixels2.show(); // This sends the updated pixel color to the hardware.
 
 }
-
-
-
-
 
 //LED functions - all left leds
 void faderR(OSCMessage &msg, int addrOffset){
