@@ -56,8 +56,8 @@ sendToUi = (key, value) => {
 let constatus = 0
 setInterval(function () {
 	constatus = 0
-	setTimeout(connection, 500)
-}, 500)
+	setTimeout(connection, 1000)
+}, 1000)
 
 let connection = () => {
 	if (constatus == 1) sendToUi(0, 'connected')
