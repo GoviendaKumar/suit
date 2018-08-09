@@ -18,23 +18,23 @@ var midi = new MIDI.input()
 
 var udpPort = new OSC.UDPPort({
 	localAddress : '0.0.0.0',
-	localPort    : 9000
+	localPort    : 9004
 })
 var extPort = new OSC.UDPPort({
 	localAddress : '0.0.0.0',
-	localPort    : 7000
+	localPort    : 9005
 })
 
 sendToArduino = (address, args) => {
 	//console.log(address, args)
 	udpPort.send({address, args},
-		'192.168.1.123', 8000)
+		'192.168.1.6', 8000)
 }
 
 sendTovj = (address, args) => {
 	//console.log(address, args)
  	extPort.send({address, args},
-	 	'192.168.1.6', 5000)
+	 	'192.168.1.1', 8000)
 }
 
 sendToUi = (key, value) => {
@@ -102,25 +102,7 @@ let ledAddr = (params => {
 	l2lb: {arduino: '/l2lb'},    r2lb: {arduino: '/r2lb'},
 	l3lr: {arduino: '/l3lr'},    r3lr: {arduino: '/r3lr'},
 	l3lg: {arduino: '/l3lg'},    r3lg: {arduino: '/r3lg'},
-	l3lb: {arduino: '/l3lb'},    r3lb: {arduino: '/r3lb'},
-	l4lr: {arduino: '/l4lr'},    r4lr: {arduino: '/r4lr'},
-	l4lg: {arduino: '/l4lg'},    r4lg: {arduino: '/r4lg'},
-	l4lb: {arduino: '/l4lb'},    r4lb: {arduino: '/r4lb'},
-	l5lr: {arduino: '/l5lr'},    r5lr: {arduino: '/r5lr'},
-	l5lg: {arduino: '/l5lg'},    r5lg: {arduino: '/r5lg'},
-	l5lb: {arduino: '/l5lb'},    r5lb: {arduino: '/r5lb'},
-	l6lr: {arduino: '/l6lr'},    r6lr: {arduino: '/r6lr'},
-	l6lg: {arduino: '/l6lg'},    r6lg: {arduino: '/r6lg'},
-	l6lb: {arduino: '/l6lb'},    r6lb: {arduino: '/r6lb'},
-	l7lr: {arduino: '/l7lr'},    r7lr: {arduino: '/r7lr'},
-	l7lg: {arduino: '/l7lg'},    r7lg: {arduino: '/r7lg'},
-	l7lb: {arduino: '/l7lb'},    r7lb: {arduino: '/r7lb'},
-	l8lr: {arduino: '/l8lr'},    r8lr: {arduino: '/r8lr'},
-	l8lg: {arduino: '/l8lg'},    r8lg: {arduino: '/r8lg'},
-	l8lb: {arduino: '/l8lb'},    r8lb: {arduino: '/r8lb'},
-	l9lr: {arduino: '/l9lr'},    r9lr: {arduino: '/r9lr'},
-	l9lg: {arduino: '/l9lg'},    r9lg: {arduino: '/r9lg'},
-	l9lb: {arduino: '/l9lb'},    r9lb: {arduino: '/r9lb'}
+	l3lb: {arduino: '/l3lb'},    r3lb: {arduino: '/r3lb'}
 })
 
 let imuAddr = (params => {
