@@ -34,7 +34,7 @@ const int ledPin = 14;                 // D5 pin at NodeMCU
 WiFiUDP Udp;                           // A UDP instance to let us send and receive packets over UDP
 const IPAddress destIp(192,168,1,255);   // remote IP of the target device
 const unsigned int localPort = 8000;   // local port to listen for UDP packets at the NodeMCU (another device must send OSC messages to this port)
-const unsigned int destPort = 9000;    // remote port of the target device where the NodeMCU sends OSC to
+const unsigned int destPort = 9004;    // remote port of the target device where the NodeMCU sends OSC to
 
 unsigned int ledState = 1;             // LOW means led is *on*
 
@@ -103,7 +103,7 @@ void setup() {
 
      // Specify a static IP address for NodeMCU
      // If you erase this line, your ESP8266 will get a dynamic IP address
-    WiFi.config(IPAddress(192,168,1,123),IPAddress(192,168,1,1), IPAddress(255,255,255,0));
+    WiFi.config(IPAddress(192,168,1,6),IPAddress(192,168,1,1), IPAddress(255,255,255,0));
 
     // Connect to WiFi network
     Serial.println();
