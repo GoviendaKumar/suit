@@ -225,7 +225,7 @@ ipcRenderer.on('ping', (event, msg) => {
 
 ipcRenderer.on('update', (event, msg) => {
 	for (let i in msg) {
-		 //if (i == 'vibro') IMUs.lArm.vibro.setState(msg[i])
+		 if (i == 'vibro') vib.lArm.vibro.setState(msg[i])
 
 		 if (i == 'axl') IMUs.lArm.acc.x.record(msg[i])
 		 if (i == 'ayl') IMUs.lArm.acc.y.record(msg[i])
@@ -247,9 +247,31 @@ ipcRenderer.on('update', (event, msg) => {
 		 if (i == 'myr') IMUs.rArm.magn.y.record(msg[i])
 		 if (i == 'mzr') IMUs.rArm.magn.z.record(msg[i])
 
-		if (i == 'r') pins.lArm.setColor({r: msg[i] * 255})
-		if (i == 'g') pins.lArm.setColor({g: msg[i] * 255})
-		if (i == 'b') pins.lArm.setColor({b: msg[i] * 255})
+		 if (i == 'l0lr') pins.lArm.setColor({r: msg[i]})
+		 if (i == 'l0lg') pins.lArm.setColor({g: msg[i]})
+		 if (i == 'l0lb') pins.lArm.setColor({b: msg[i]})
+		 if (i == 'l1lr') pins.lRibs.setColor({r: msg[i]})
+		 if (i == 'l1lg') pins.lRibs.setColor({g: msg[i]})
+		 if (i == 'l1lb') pins.lRibs.setColor({b: msg[i]})
+		 if (i == 'l2lr') pins.lThigh.setColor({r: msg[i]})
+		 if (i == 'l2lg') pins.lThigh.setColor({g: msg[i]})
+		 if (i == 'l2lb') pins.lThigh.setColor({b: msg[i]})
+		 if (i == 'l3lr') pins.lFoot.setColor({r: msg[i]})
+		 if (i == 'l3lg') pins.lFoot.setColor({g: msg[i]})
+		 if (i == 'l3lb') pins.lFoot.setColor({b: msg[i]})
+
+		 if (i == 'r0lr') pins.rArm.setColor({r: msg[i]})
+		 if (i == 'r0lg') pins.rArm.setColor({g: msg[i]})
+		 if (i == 'r0lb') pins.rArm.setColor({b: msg[i]})
+		 if (i == 'r1lr') pins.rRibs.setColor({r: msg[i]})
+		 if (i == 'r1lg') pins.rRibs.setColor({g: msg[i]})
+		 if (i == 'r1lb') pins.rRibs.setColor({b: msg[i]})
+		 if (i == 'r2lr') pins.rThigh.setColor({r: msg[i]})
+		 if (i == 'r2lg') pins.rThigh.setColor({g: msg[i]})
+		 if (i == 'r2lb') pins.rThigh.setColor({b: msg[i]})
+		 if (i == 'r3lr') pins.rFoot.setColor({r: msg[i]})
+		 if (i == 'r3lg') pins.rFoot.setColor({g: msg[i]})
+		 if (i == 'r3lb') pins.rFoot.setColor({b: msg[i]})
 
 		pinList.forEach(id => {
 			if (i == id) {
