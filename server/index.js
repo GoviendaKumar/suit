@@ -137,22 +137,14 @@ udpPort.on("message", (oscMsg) => {
 	if (oscMsg.address == '/ping') sendToUi(0, 'ping')
 })
 
-let vj = false
-ipcMain.on('vj', (event, arg) => {
-	vj = arg
-})
-
-let raw = false
-ipcMain.on('raw', (event, arg) => {
-	raw = arg
-})
-
 extPort.on("message", (oscMsg) => {
 	//console.log(oscMsg.address, oscMsg.args)
 	for (let i in ledAddr) {
-		if (vj && oscMsg.address == ledAddr[i].arduino)
-
+		if (vj && oscMsg.address == ledAddr[i].arduino) {
 			sendToArduino(oscMsg.address, oscMsg.args)
+			sendToUi(i, oscMsg.args)
+			break
+		}
 	}
 })
 
@@ -188,11 +180,6 @@ midi.on('message', (time, data) => {
 			break
 		}
 	}
-})
-
-let pixwalk = false
-ipcMain.on('walk', (event, arg) => {
-	pixwalk = arg
 })
 
 let rgb = { ls: {r: 0, g: 0, b: 0}, rs: {r: 0, g: 0, b: 0}}
@@ -233,6 +220,19 @@ ipcMain.on('range', (event, arg) => {
 })
 ipcMain.on('auto', (event, arg) => {
 	auto = arg
+})
+let pixwalk = false
+ipcMain.on('walk', (event, arg) => {
+	pixwalk = arg
+})
+let vj = false
+ipcMain.on('vj', (event, arg) => {
+	vj = arg
+})
+
+let raw = false
+ipcMain.on('raw', (event, arg) => {
+	raw = arg
 })
 
 // midi house work
