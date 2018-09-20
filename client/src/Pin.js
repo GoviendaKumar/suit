@@ -1,5 +1,5 @@
 
-import {map} from './helpers'
+//import {map} from './helpers'
 import electron from 'electron'
 
 export let Pin = ({
