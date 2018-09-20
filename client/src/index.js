@@ -7,13 +7,28 @@ import {vibWidget} from './vibWidget'
 import {ColorPicker} from './ColorPicker'
 import {Pin} from './Pin'
 import {Cords} from './Cords'
-import {Button} from './Buttons'
+import {Button, radio} from './Buttons'
+
+const EventEmitter = require('events')
 
 var Quaternion = require('quaternion')
 var q = new Quaternion("99.3+8i")
 console.log(q)
 
 const ipcRenderer = electron.ipcRenderer
+
+Button('Ping', 'ping')
+Button('Set Zero position', 'calibrate')
+Button('External Artist', 'ext')
+Button('Autonomous Mode', 'auto')
+radio('reset', 'Leds off', 'restxt')
+radio('conti', 'Continuous', 'contitxt')
+radio('fix', 'Fixed', 'fixtxt')
+radio('norm', 'Normalized', 'normtxt')
+radio('raw', 'Raw', 'rawtxt')
+radio('stand', 'Standard', 'standtxt')
+radio('pix', 'Pixel Walk', 'pixtxt')
+radio('strob', 'Strobo Effect', 'strotxt')
 
 let pinList = []
 let cords = Cords()
@@ -22,12 +37,12 @@ let pins = {
 	lArm      : 0, rArm      : 0,
 	lRibs     : 0, rRibs     : 0,
 	lThigh    : 0, rThigh    : 0,
-	lFoot     : 0, rFoot     : 0,
+	lFoot     : 0, rFoot     : 0
 }
-
 for (let i in pins) {
 	pins[i] = Pin ({
 		position : i,
+
 		onClick (e) {
 			if (e.shiftKey) {
 				if (pinList.length == Object.keys(pins).length)
@@ -52,8 +67,17 @@ for (let i in pins) {
 	pinList.push(i)
 }
 
+let sallpins = Pin ({
+	position : 'aPin',
+	onClick (e) {
+		pinList = []
+		for (let i in pins) pinList.push(i)
+	}
+})
+
 let colorPicker = ColorPicker({
 	onColorChange (rgb) {
+		document.querySelector('.reset').checked = false
 		pinList.forEach(i => {
 			pins[i].setColor(rgb)
 			if (pins[i] == pins.lArm)
@@ -84,101 +108,142 @@ let colorPicker = ColorPicker({
 	}
 })
 
-Button('Reset LEDs', 'reset')
-Button('  Select All  ', 'allPins')
-Button('      Ping      ', 'ping')
-Button('  calibrate   ', 'calibrate')
-Button('VJ Disabled', 'evj')
-Button('   Auto Disabled    ', 'auto')
-Button(' PixWalk Disabled ', 'pixwalk')
-Button('Normalized Values', 'raw')
-Button('Continuous Range', 'range')
-
 document.querySelector('.reset').onclick = () => {
 	ipcRenderer.send('reset')
   for (let i in pins) {
 		pins[i].setColor({r: 0, g: 0, b: 0})
 	}
 }
-document.querySelector('.allPins').onclick = () => {
-	pinList = []
-	for (let i in pins) pinList.push(i)
-}
-document.querySelector('.ping').onclick = () => {
+
+let pingdom = document.querySelector('.ping')
+pingdom.onmousedown = () => {
+	pingdom.style.backgroundColor = 'grey'
+	pingdom.style.color = 'red'
 	ipcRenderer.send('ping')
 }
-document.querySelector('.calibrate').onclick = () => {
-	ipcRenderer.send('calibrate')
+pingdom.onmouseup = () => {
+	pingdom.style.backgroundColor = 'white'
+	pingdom.style.color = 'black'
 }
 
-let vj = 0
-document.querySelector('.evj').onclick = () => {
-	if (vj == 0){
-		vj = 1
-		ipcRenderer.send('vj', true)
-		document.querySelector('.evj').value = "VJ Enabled "
+let calibdom = document.querySelector('.calibrate')
+calibdom.onmousedown = () => {
+	calibdom.style.backgroundColor = 'grey'
+	calibdom.style.color = 'white'
+	ipcRenderer.send('ping')
+}
+calibdom.onmouseup = () => {
+	calibdom.style.backgroundColor = 'white'
+	calibdom.style.color = 'black'
+}
+
+let ext = 0
+let extdom = document.querySelector('.ext')
+extdom.onclick = () => {
+	if (ext == 0){
+		ext = 1
+		ipcRenderer.send('ext', true)
+		extdom.style.color = 'lightgreen'
+		extdom.style.backgroundColor = 'grey'
 	}
 	else {
-		vj = 0
-		ipcRenderer.send('vj', false)
-		document.querySelector('.evj').value = "VJ Disabled"
+		ext = 0
+		ipcRenderer.send('ext', false)
+		extdom.style.color = 'black'
+		extdom.style.backgroundColor = 'white'
 	}
+}
+extdom.onmousedown = () => {
+	if (ext == 0) extdom.style.color = 'white'
+	else extdom.style.color = 'grey'
 }
 
 let aut = 0
-document.querySelector('.auto').onclick = () => {
+let autodom = document.querySelector('.auto')
+autodom.onclick = () => {
 	if (aut == 0){
 		aut = 1
 		ipcRenderer.send('auto', true)
-		document.querySelector('.auto').value = "   Auto Enabled     "
+		autodom.style.color = 'lightgreen'
+		autodom.style.backgroundColor = 'grey'
 	}
 	else {
 		aut = 0
 		ipcRenderer.send('auto', false)
-		document.querySelector('.auto').value = "   Auto Disabled    "
+		autodom.style.color = 'black'
+		autodom.style.backgroundColor = 'white'
 	}
 }
-
-let walk = 0
-document.querySelector('.pixwalk').onclick = () => {
-	if (walk == 0){
-		walk = 1
-		ipcRenderer.send('walk', true)
-		document.querySelector('.pixwalk').value = " PixWalk Enabled  "
-	}
-	else {
-		walk = 0
-		ipcRenderer.send('walk', false)
-		document.querySelector('.pixwalk').value = " PixWalk Disabled "
-	}
+autodom.onmousedown = () => {
+	if (aut == 0) autodom.style.color = 'white'
+	else autodom.style.color = 'grey'
 }
 
-let raw = 0
-document.querySelector('.raw').onclick = () => {
-	if (raw == 0){
-		raw = 1
-		ipcRenderer.send('raw', true)
-		document.querySelector('.raw').value = "      Raw Values     "
-	}
-	else {
-		raw = 0
-		ipcRenderer.send('raw', false)
-		document.querySelector('.raw').value = "Normalized Values"
-	}
+let stand = document.querySelector('.stand')
+let standtxt = document.querySelector('.standtxt')
+let pix = document.querySelector('.pix')
+let pixtxt = document.querySelector('.pixtxt')
+let strob = document.querySelector('.strob')
+let strotxt = document.querySelector('.strotxt')
+stand.checked = true
+standtxt.style.color = 'lightgreen'
+
+stand.onclick = () => {
+	ipcRenderer.send('mod', 1)
+	pix.checked = strob.checked = false
+	standtxt.style.color = 'lightgreen'
+	pixtxt.style.color = strotxt.style.color = 'white'
+}
+pix.onclick = () => {
+	ipcRenderer.send('mod', 2)
+	stand.checked = strob.checked = false
+	pixtxt.style.color = 'lightgreen'
+	standtxt.style.color = strotxt.style.color = 'white'
+}
+class MyEmitter extends EventEmitter {}
+const myEmitter = new MyEmitter()
+myEmitter.on('event', () => {
+  strobo()
+})
+strob.onclick = () => {
+	myEmitter.emit('event')
+	pix.checked = stand.checked = false
+	strotxt.style.color = 'lightgreen'
+	pixtxt.style.color = standtxt.style.color = 'white'
 }
 
-let range = 1
-document.querySelector('.range').onclick = () => {
-	if (range == 1){
-		range = 0
-		ipcRenderer.send('range', false)
-		document.querySelector('.range').value = "     Fixed Range    "
-	}
-	else {
-		range = 1
-		ipcRenderer.send('range', true)
-		document.querySelector('.range').value = "Continuous Range"
-	}
+let normdom = document.querySelector('.norm')
+let normtxtdom = document.querySelector('.normtxt')
+normdom.checked = true
+normtxtdom.style.color = 'lightgreen'
+normdom.onclick = () => {
+	ipcRenderer.send('norm', true)
+	document.querySelector('.raw').checked = false
+	normtxtdom.style.color = 'lightgreen'
+	document.querySelector('.rawtxt').style.color = 'white'
+}
+document.querySelector('.raw').onclick = () =>{
+	ipcRenderer.send('norm', false)
+	normdom.checked = false
+	normtxtdom.style.color = 'white'
+	document.querySelector('.rawtxt').style.color = 'lightgreen'
+}
+
+let contidom = document.querySelector('.conti')
+let contitxtdom = document.querySelector('.contitxt')
+contidom.checked = true
+contitxtdom.style.color = 'lightgreen'
+contidom.onclick = () => {
+	ipcRenderer.send('range', true)
+	document.querySelector('.fix').checked = false
+	contitxtdom.style.color = 'lightgreen'
+	document.querySelector('.fixtxt').style.color = 'white'
+}
+document.querySelector('.fix').onclick = () =>{
+	ipcRenderer.send('range', false)
+	contidom.checked = false
+	contitxtdom.style.color = 'white'
+	document.querySelector('.fixtxt').style.color = 'lightgreen'
 }
 
 colorPicker.setColor({r: 255, g: 255, b: 255})
@@ -225,7 +290,7 @@ ipcRenderer.on('ping', (event, msg) => {
 
 ipcRenderer.on('update', (event, msg) => {
 	for (let i in msg) {
-		 if (i == 'vibro') vib.lArm.vibro.setState(msg[i])
+		// if (i == 'vibro') vib.lArm.vibro.setState(msg[i])
 
 		 if (i == 'axl') IMUs.lArm.acc.x.record(msg[i])
 		 if (i == 'ayl') IMUs.lArm.acc.y.record(msg[i])
