@@ -29,7 +29,7 @@ body
 	position    : absolute
 	left        : 50%
 	top         : 2%
-	font-size   : 6vh
+	font-size   : 2.5vh
 	margin-left : -40vh
 	font-weight : lighter
 
@@ -73,7 +73,7 @@ body
 	.title
 		position      : relative
 		display       : block
-		font-family   : menlo
+		font-family   : roboto
 		font-weight   : lighter
 		font-size     : 11px
 		margin-bottom : 10px
@@ -152,7 +152,8 @@ body
 	&.lFoot
 		margin-left : 12vh
 		margin-top  : 18vh
-
+	&.aPin
+		margin-top  : 22vh
 .colorPicker
 	position : absolute
 	left     : 50%
@@ -199,30 +200,47 @@ body
 			pointer-events   : none
 			-webkit-background-clip : content
 
+.stslider
+	position    : absolute
+	left        : 75%
+	top         : 85%
+	display  : inline-block
+	width    : 100px
+	cursor   : pointer
+	border-radius : 14px
+	background    : linear-gradient(to right, rgba(white, .05), rgba(white, .15))
+	-webkit-app-region : no-drag
+	.stvalue
+		position : relative
+		width    : 20px
+		height   : 20px
+		// border   : 2px transparent solid
+		border-radius    : 12px
+		background-color : $light
+		pointer-events   : none
+		-webkit-background-clip : content
+
 .reset
 	position    : absolute
-	left        : 50%
-	top         : 50%
-	margin-left : -40vh
-
-.allPins
+	left        : 45%
+	top         : 93%
+.restxt
 	position    : absolute
-	left        : 50%
-	top         : 53%
-	margin-left : -40vh
-
+	left        : 48%
+	top         : 93%
+	font-family	: roboto
+	font-size		: 13
 .ping
 	position    : absolute
 	left        : 50%
 	top         : 56%
 	margin-left : -40vh
-
 .calibrate
 	position    : absolute
 	left        : 50%
 	top         : 59%
 	margin-left : -40vh
-.evj
+.ext
 	position    : absolute
 	left        : 50%
 	top         : 62%
@@ -232,18 +250,87 @@ body
 	left        : 114.1%
 	top         : 50%
 	margin-left : -40vh
-.pixwalk
-	position    : absolute
-	left        : 114%
-	top         : 53%
-	margin-left : -40vh
-.raw
-	position    : absolute
-	left        : 114%
-	top         : 56%
-	margin-left : -40vh
-.range
+.conti
 	position    : absolute
 	left        : 114%
 	top         : 59%
 	margin-left : -40vh
+.contitxt
+	position    : absolute
+	left        : 114%
+	top         : 61%
+	margin-left : -40vh
+	font-family	: roboto
+	font-size		: 13
+.fix
+	position    : absolute
+	left        : 125%
+	top         : 59%
+	margin-left : -40vh
+.fixtxt
+	position    : absolute
+	left        : 125%
+	top         : 61%
+	margin-left : -40vh
+	font-family	: roboto
+	font-size		: 13
+.norm
+	position    : absolute
+	left        : 114%
+	top         : 56%
+	margin-left : -40vh
+.normtxt
+	position    : absolute
+	left        : 114%
+	top         : 58%
+	margin-left : -40vh
+	font-family	: roboto
+	font-size		: 13
+.raw
+	position    : absolute
+	left        : 125%
+	top         : 56%
+	margin-left : -40vh
+.rawtxt
+	position    : absolute
+	left        : 125%
+	top         : 58%
+	margin-left : -40vh
+	font-family	: roboto
+	font-size		: 13
+.stand
+	position    : absolute
+	left        : 114%
+	top         : 53%
+	margin-left : -40vh
+.standtxt
+	position    : absolute
+	left        : 114%
+	top         : 55%
+	margin-left : -40vh
+	font-family	: roboto
+	font-size		: 13
+.pix
+	position    : absolute
+	left        : 125%
+	top         : 53%
+	margin-left : -40vh
+.pixtxt
+	position    : absolute
+	left        : 125%
+	top         : 55%
+	margin-left : -40vh
+	font-family	: roboto
+	font-size		: 13
+.strob
+	position    : absolute
+	left        : 135%
+	top         : 53%
+	margin-left : -40vh
+.strotxt
+	position    : absolute
+	left        : 135%
+	top         : 55%
+	margin-left : -40vh
+	font-family	: roboto
+	font-size		: 13
