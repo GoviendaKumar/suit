@@ -37,7 +37,7 @@ export let ColorPicker = ({
 			x : e.pageX - (wheelRect.left + center.x),
 			y : e.pageY - (wheelRect.top  + center.y)}
 		let length = Math.sqrt(
-			Math.pow(pos.x, 2) + 
+			Math.pow(pos.x, 2) +
 			Math.pow(pos.y, 2))
 		let short = {
 			x : pos.x / length * radius,
@@ -46,10 +46,10 @@ export let ColorPicker = ({
 		hue.style.left = center.x + huePosition.x + 'px'
 		hue.style.top  = center.y + huePosition.y + 'px'
 		hsv.s = Math.sqrt(
-			Math.pow(huePosition.x, 2) + 
+			Math.pow(huePosition.x, 2) +
 			Math.pow(huePosition.y, 2)) / radius
 		let hueValue = Math.atan2(
-			huePosition.y, 
+			huePosition.y,
 			huePosition.x) / (2 * Math.PI)
 		hsv.h = hueValue < 0? -1 * hueValue: 1 - hueValue
 		onColorChange(HSVtoRGB(hsv))
@@ -57,12 +57,12 @@ export let ColorPicker = ({
 	}
 	dragAndDrop(wheel, {
 		onDown : setHueAndSaturation,
-		onMove : setHueAndSaturation
+	//	onMove : setHueAndSaturation
 	})
 	// value
 	let setValue = e => {
-		let lRaw = e.pageX - 
-			slider.getBoundingClientRect().left - 
+		let lRaw = e.pageX -
+			slider.getBoundingClientRect().left -
 			value.offsetWidth / 2
 		let lMax = slider.offsetWidth - value.offsetWidth
 		let lCurrent = lRaw < 0? 0: lRaw > lMax? lMax: lRaw
@@ -72,18 +72,56 @@ export let ColorPicker = ({
 		onColorChange(HSVtoRGB(hsv))
 		e.stopPropagation()
 	}
+
 	dragAndDrop(slider, {
 		onDown : setValue,
-		onMove : setValue
+		//onMove : setValue
 	})
-	let hsv = {h: 0, s: 0, v: 0}
+
+  let stlCurrent = 80
+	//stroboslider
+	let stslider = document.createElement('div')
+	stslider.classList.add('stslider')
+	document.body.appendChild(stslider)
+	//strobovalue
+	let stvalue = document.createElement('div')
+	stvalue.classList.add('stvalue')
+	stslider.appendChild(stvalue)
+	// strobovalue
+	let setstValue = e => {
+		let stlRaw = e.pageX -
+			stslider.getBoundingClientRect().left -
+			stvalue.offsetWidth / 2
+		let stlMax = stslider.offsetWidth - stvalue.offsetWidth
+		stlCurrent = stlRaw < 0? 0: stlRaw > stlMax? stlMax: stlRaw
+		stvalue.style.left = stlCurrent + 'px'
+		e.stopPropagation()
+	}
+	dragAndDrop(stslider, {
+		onDown : setstValue,
+		onMove : setstValue
+	})
+
+  let hsv = {h: 0, s: 0, v: 0}
+	var n = 0
+	var stro = 0
+	let strobo = () => {
+		stro = 10 - Math.abs(n++ % 20 - 10)
+		if(stro == 0) hsv.v = 0
+		if(stro == 10) hsv.v = 1
+		wheel.style.opacity = map(hsv.v, 0, 1, .2, .5)
+		onColorChange(HSVtoRGB(hsv))
+		setTimeout(strobo, stlCurrent*1.5+10)
+	}
+	//strobo()
+
 	// interface
 	return {
 		wheel,
 		setColor (rgb) {
 			hsv = RGBtoHSV(rgb)
 			// value
-			value.style.left = 
+			value.style.left =
 				hsv.v * (slider.offsetWidth - value.offsetWidth)
 			// hue & saturation
 			let wheelRect = wheel.getBoundingClientRect()
@@ -99,4 +137,3 @@ export let ColorPicker = ({
 		}
 	}
 }
-
