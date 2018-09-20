@@ -1,5 +1,5 @@
 
-let colorflow = (rgb, side, off) => {
+let colorflow = (rgb, side, mod) => {
   if(side == 'left'||side == 'both'){
 		sendToArduino('/l0lr', rgb.ls.r)
     sendToArduino('/l0lg', rgb.ls.g)
@@ -13,7 +13,7 @@ let colorflow = (rgb, side, off) => {
     setTimeout(function(){sendToArduino('/l3lr', rgb.ls.r)}, 450)
     setTimeout(function(){sendToArduino('/l3lg', rgb.ls.g)}, 450)
     setTimeout(function(){sendToArduino('/l3lb', rgb.ls.b)}, 450)
-    if (off){
+    if (mod == 2){
       setTimeout(function(){sendToArduino('/l0lr', 0)}, 150)
   		setTimeout(function(){sendToArduino('/l0lg', 0)}, 150)
   		setTimeout(function(){sendToArduino('/l0lb', 0)}, 150)
@@ -41,7 +41,7 @@ let colorflow = (rgb, side, off) => {
     setTimeout(function(){sendToArduino('/r3lr', rgb.rs.r)}, 450)
     setTimeout(function(){sendToArduino('/r3lg', rgb.rs.g)}, 450)
     setTimeout(function(){sendToArduino('/r3lb', rgb.rs.b)}, 450)
-    if (off){
+    if (mod == 2){
       setTimeout(function(){sendToArduino('/r0lr', 0)}, 150)
       setTimeout(function(){sendToArduino('/r0lg', 0)}, 150)
       setTimeout(function(){sendToArduino('/r0lb', 0)}, 150)
