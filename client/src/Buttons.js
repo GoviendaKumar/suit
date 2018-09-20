@@ -22,10 +22,21 @@ export let vibBut = ({
 	}
 }
 
-export let Button = (butTxt, butClass) => {
+export let Button = (txt, clas) => {
 	let b = document.createElement('input')
   b.type = 'button'
-	b.value = butTxt
-	b.classList.add(butClass)
+	b.value = txt
+	b.classList.add(clas)
   document.body.appendChild(b)
+}
+
+export let radio = (clas, txt, tclas) => {
+	let r = document.createElement('input')
+  r.type = 'radio'
+	r.classList.add(clas)
+	document.body.appendChild(r)
+	let l = document.createElement('label')
+  l.appendChild(document.createTextNode(txt))
+	l.classList.add(tclas)
+  document.body.insertBefore(l, document.querySelector(clas))
 }
