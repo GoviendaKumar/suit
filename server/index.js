@@ -31,7 +31,7 @@ sendToArduino = (address, args) => {
 		'192.168.1.6', 8000)
 }
 
-sendTovj = (address, args) => {
+sendToExt = (address, args) => {
 	//console.log(address, args)
  	extPort.send({address, args},
 	 	'192.168.1.1', 8000)
@@ -140,12 +140,17 @@ udpPort.on("message", (oscMsg) => {
 extPort.on("message", (oscMsg) => {
 	//console.log(oscMsg.address, oscMsg.args)
 	for (let i in ledAddr) {
-		if (vj && oscMsg.address == ledAddr[i].arduino) {
+		if (ext && oscMsg.address == ledAddr[i].arduino) {
 			sendToArduino(oscMsg.address, oscMsg.args)
 			sendToUi(i, oscMsg.args)
 			break
 		}
 	}
+})
+
+let norm = true
+ipcMain.on('norm', (event, arg) => {
+	norm = arg
 })
 
 // on arduino change
@@ -155,13 +160,11 @@ udpPort.on('bundle', (oscBundle, timeTag, info) => {
 		let {address, args} = packet
 		for (let i in imuAddr) {
 			if (address == imuAddr[i].arduino) {
-				if(raw)
-				 {
-					 sendToUi(i, args[0])
-				 	 sendTovj(imuAddr[i].arduino, args[0])
-				 }
-				else
-				 normalize(imuAddr[i].arduino, args[0])
+				if(norm)
+					 normalize(imuAddr[i].arduino, args[0])
+				else {
+					sendToUi(i, args[0])
+					sendToExt(imuAddr[i].arduino, args[0])}
 				break
 			}
 		}
@@ -182,6 +185,9 @@ midi.on('message', (time, data) => {
 	}
 })
 
+ipcMain.on('mod', (event, arg) => {
+	mod = arg
+})
 let rgb = { ls: {r: 0, g: 0, b: 0}, rs: {r: 0, g: 0, b: 0}}
 // on ui change
 ipcMain.on('ui', (event, arg) => {
@@ -189,17 +195,18 @@ ipcMain.on('ui', (event, arg) => {
 		let v = arg[i]
 		ledAddr[i].value = v
 		storage.set(i, v)
-		if(pixwalk){
+		if (mod == 1)
+		sendToArduino(ledAddr[i].arduino, v)
+		else if (mod == 2) {
 			if (i == 'l0lr') rgb.ls.r = v
 			if (i == 'l0lg') rgb.ls.g = v
 			if (i == 'l0lb') rgb.ls.b = v
-			if (i == 'l0lr') colorflow(rgb, 'left', true)
+			if (i == 'l0lr') colorflow(rgb, 'left', mod)
 			if (i == 'r0lr') rgb.rs.r = v
 			if (i == 'r0lg') rgb.rs.g = v
 			if (i == 'r0lb') rgb.rs.b = v
-			if (i == 'r0lr') colorflow(rgb, 'right', true)
+			if (i == 'r0lr') colorflow(rgb, 'right', mod)
 		}
-		else sendToArduino(ledAddr[i].arduino, v)
 	}
 })
 
@@ -221,18 +228,9 @@ ipcMain.on('range', (event, arg) => {
 ipcMain.on('auto', (event, arg) => {
 	auto = arg
 })
-let pixwalk = false
-ipcMain.on('walk', (event, arg) => {
-	pixwalk = arg
-})
-let vj = false
-ipcMain.on('vj', (event, arg) => {
-	vj = arg
-})
-
-let raw = false
-ipcMain.on('raw', (event, arg) => {
-	raw = arg
+let ext = false
+ipcMain.on('ext', (event, arg) => {
+	ext = arg
 })
 
 // midi house work
