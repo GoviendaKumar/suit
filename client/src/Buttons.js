@@ -40,3 +40,10 @@ export let radio = (clas, txt, tclas) => {
 	l.classList.add(tclas)
   document.body.insertBefore(l, document.querySelector(clas))
 }
+
+export let label = (clas, txt, bclas) => {
+	let l = document.createElement('label')
+	l.appendChild(document.createTextNode(txt))
+	l.classList.add(clas)
+	document.body.insertBefore(l, document.querySelector(bclas))
+}
