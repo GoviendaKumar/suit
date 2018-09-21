@@ -27,7 +27,7 @@ export let Cords = ({
 				ct.moveTo(from.x, from.y)
 				ct.bezierCurveTo(
 					from.x, middle * .9,
-					to.x, middle * 1.1, 
+					to.x, middle * 1.1,
 					to.x, to.y)
 				ct.strokeStyle = `rgba(255,255,255, ${select? .4: .05})`
 				ct.stroke()
