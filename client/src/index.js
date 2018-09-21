@@ -7,7 +7,7 @@ import {vibWidget} from './vibWidget'
 import {ColorPicker} from './ColorPicker'
 import {Pin} from './Pin'
 import {Cords} from './Cords'
-import {Button, radio} from './Buttons'
+import {Button, radio, label} from './Buttons'
 
 const EventEmitter = require('events')
 
@@ -17,9 +17,9 @@ console.log(q)
 
 const ipcRenderer = electron.ipcRenderer
 
-Button('Ping', 'ping')
-Button('Set Zero position', 'calibrate')
-Button('External Artist', 'ext')
+Button('Ping to Costume', 'ping')
+Button('Set Zero Position', 'calibrate')
+Button(' External Artist  ', 'ext')
 Button('Autonomous Mode', 'auto')
 radio('reset', 'Leds off', 'restxt')
 radio('conti', 'Continuous', 'contitxt')
@@ -29,6 +29,12 @@ radio('raw', 'Raw', 'rawtxt')
 radio('stand', 'Standard', 'standtxt')
 radio('pix', 'Pixel Walk', 'pixtxt')
 radio('strob', 'Strobo Effect', 'strotxt')
+label('imu', 'IMU Calibration', 'calibrate')
+label('range', 'Min-Max Range:', 'conti')
+label('commu', 'Communication', 'ping')
+label('featu', 'Software Features', 'auto')
+label('valu', 'IMU Values:', 'norm')
+label('led', 'LED Coloring:', 'stand')
 
 let pinList = []
 let cords = Cords()
@@ -203,7 +209,7 @@ pix.onclick = () => {
 class MyEmitter extends EventEmitter {}
 const myEmitter = new MyEmitter()
 myEmitter.on('event', () => {
-  strobo()
+//  strobo()
 })
 strob.onclick = () => {
 	myEmitter.emit('event')
