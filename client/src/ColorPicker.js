@@ -57,7 +57,7 @@ export let ColorPicker = ({
 	}
 	dragAndDrop(wheel, {
 		onDown : setHueAndSaturation,
-	//	onMove : setHueAndSaturation
+		onMove : setHueAndSaturation
 	})
 	// value
 	let setValue = e => {
@@ -75,7 +75,7 @@ export let ColorPicker = ({
 
 	dragAndDrop(slider, {
 		onDown : setValue,
-		//onMove : setValue
+		onMove : setValue
 	})
 
   let stlCurrent = 80
@@ -106,14 +106,16 @@ export let ColorPicker = ({
 	var n = 0
 	var stro = 0
 	let strobo = () => {
+		let strobcheck = document.querySelector('.strob')
+		if (strobcheck.checked == true) {
+			setTimeout(strobo, stlCurrent*1.5+10)
+		}
 		stro = 10 - Math.abs(n++ % 20 - 10)
 		if(stro == 0) hsv.v = 0
 		if(stro == 10) hsv.v = 1
 		wheel.style.opacity = map(hsv.v, 0, 1, .2, .5)
 		onColorChange(HSVtoRGB(hsv))
-		setTimeout(strobo, stlCurrent*1.5+10)
 	}
-	//strobo()
 
 	// interface
 	return {
@@ -134,6 +136,9 @@ export let ColorPicker = ({
 			}
 			hue.style.left = huePosition.x + wheelRect.width /2 + 'px'
 			hue.style.top  = huePosition.y + wheelRect.height/2 + 'px'
+		},
+		strobocall(){
+			strobo()
 		}
 	}
 }
