@@ -136,7 +136,7 @@ let calibdom = document.querySelector('.calibrate')
 calibdom.onmousedown = () => {
 	calibdom.style.backgroundColor = 'grey'
 	calibdom.style.color = 'white'
-	ipcRenderer.send('ping')
+	ipcRenderer.send('calibrate')
 }
 calibdom.onmouseup = () => {
 	calibdom.style.backgroundColor = 'white'
@@ -206,13 +206,8 @@ pix.onclick = () => {
 	pixtxt.style.color = 'lightgreen'
 	standtxt.style.color = strotxt.style.color = 'white'
 }
-class MyEmitter extends EventEmitter {}
-const myEmitter = new MyEmitter()
-myEmitter.on('event', () => {
-//  strobo()
-})
 strob.onclick = () => {
-	myEmitter.emit('event')
+	colorPicker.strobocall()
 	pix.checked = stand.checked = false
 	strotxt.style.color = 'lightgreen'
 	pixtxt.style.color = standtxt.style.color = 'white'
