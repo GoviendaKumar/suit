@@ -11,7 +11,6 @@ let Graph = (cv, ct, color) => {
 			value.s = v
 			if (range.sMin > v) range.sMin = v
 			if (range.sMax < v) range.sMax = v
-
 		},
 		draw () {
 			// animate range
