@@ -26,13 +26,11 @@ var extPort = new OSC.UDPPort({
 })
 
 sendToArduino = (address, args) => {
-	//console.log(address, args)
 	udpPort.send({address, args},
 		'192.168.1.6', 8000)
 }
 
 sendToExt = (address, args) => {
-	//console.log(address, args)
  	extPort.send({address, args},
 	 	'192.168.1.1', 8000)
 }

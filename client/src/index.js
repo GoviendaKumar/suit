@@ -19,7 +19,7 @@ const ipcRenderer = electron.ipcRenderer
 
 Button('Ping to Costume', 'ping')
 Button('Set Zero Position', 'calibrate')
-Button(' External Artist  ', 'ext')
+Button('  External Artist  ', 'ext')
 Button('Autonomous Mode', 'auto')
 radio('reset', 'Leds off', 'restxt')
 radio('conti', 'Continuous', 'contitxt')
@@ -122,6 +122,8 @@ document.querySelector('.reset').onclick = () => {
 }
 
 let pingdom = document.querySelector('.ping')
+		pingdom.style.backgroundColor = 'white'
+		pingdom.style.color = 'black'
 pingdom.onmousedown = () => {
 	pingdom.style.backgroundColor = 'grey'
 	pingdom.style.color = 'red'
@@ -133,6 +135,8 @@ pingdom.onmouseup = () => {
 }
 
 let calibdom = document.querySelector('.calibrate')
+		calibdom.style.backgroundColor = 'white'
+		calibdom.style.color = 'black'
 calibdom.onmousedown = () => {
 	calibdom.style.backgroundColor = 'grey'
 	calibdom.style.color = 'white'
@@ -145,6 +149,8 @@ calibdom.onmouseup = () => {
 
 let ext = 0
 let extdom = document.querySelector('.ext')
+		extdom.style.color = 'black'
+		extdom.style.backgroundColor = 'white'
 extdom.onclick = () => {
 	if (ext == 0){
 		ext = 1
@@ -166,6 +172,8 @@ extdom.onmousedown = () => {
 
 let aut = 0
 let autodom = document.querySelector('.auto')
+		autodom.style.color = 'black'
+		autodom.style.backgroundColor = 'white'
 autodom.onclick = () => {
 	if (aut == 0){
 		aut = 1
