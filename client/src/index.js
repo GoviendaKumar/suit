@@ -21,6 +21,7 @@ Button('Ping to Costume', 'ping')
 Button('Set Zero Position', 'calibrate')
 Button('  External Artist  ', 'ext')
 Button('Autonomous Mode', 'auto')
+Button('External Strobo', 'extstr')
 radio('reset', 'Leds off', 'restxt')
 radio('conti', 'Continuous', 'contitxt')
 radio('fix', 'Fixed', 'fixtxt')
@@ -299,7 +300,7 @@ ipcRenderer.on('ping', (event, msg) => {
 
 ipcRenderer.on('update', (event, msg) => {
 	for (let i in msg) {
-		// if (i == 'vibro') vib.lArm.vibro.setState(msg[i])
+		 if (i == 'vibro') vib.lArm.setState((msg[i][0]))
 
 		 if (i == 'axl') IMUs.lArm.acc.x.record(msg[i])
 		 if (i == 'ayl') IMUs.lArm.acc.y.record(msg[i])
