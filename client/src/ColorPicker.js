@@ -1,6 +1,11 @@
 
 import {map, dragAndDrop, HSVtoRGB, RGBtoHSV} from './helpers'
 
+let bpm = 75
+export let setbpm = (v) => {
+	 bpm = v
+}
+
 export let ColorPicker = ({
 	parent = document.body,
 	onColorChange = () => {}
@@ -78,7 +83,7 @@ export let ColorPicker = ({
 		onMove : setValue
 	})
 
-  let stlCurrent = 80
+
 	//stroboslider
 	let stslider = document.createElement('div')
 	stslider.classList.add('stslider')
@@ -93,8 +98,8 @@ export let ColorPicker = ({
 			stslider.getBoundingClientRect().left -
 			stvalue.offsetWidth / 2
 		let stlMax = stslider.offsetWidth - stvalue.offsetWidth
-		stlCurrent = stlRaw < 0? 0: stlRaw > stlMax? stlMax: stlRaw
-		stvalue.style.left = stlCurrent + 'px'
+		bpm = stlRaw < 0? 0: stlRaw > stlMax? stlMax: stlRaw
+		stvalue.style.left = bpm + 'px'
 		e.stopPropagation()
 	}
 	dragAndDrop(stslider, {
@@ -108,7 +113,7 @@ export let ColorPicker = ({
 	let strobo = () => {
 		let strobcheck = document.querySelector('.strob')
 		if (strobcheck.checked == true) {
-			setTimeout(strobo, stlCurrent*1.5+10)
+			setTimeout(strobo, bpm*1.5+10)
 		}
 		stro = 10 - Math.abs(n++ % 20 - 10)
 		if(stro == 0) hsv.v = 0

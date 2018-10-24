@@ -1,10 +1,9 @@
-
 import '../graphic/style.sass'
 import electron from 'electron'
 import {loop} from './helpers'
 import {Widget} from './Widget'
 import {vibWidget} from './vibWidget'
-import {ColorPicker} from './ColorPicker'
+import {ColorPicker, setbpm} from './ColorPicker'
 import {Pin} from './Pin'
 import {Cords} from './Cords'
 import {Button, radio, label} from './Buttons'
@@ -17,25 +16,26 @@ console.log(q)
 
 const ipcRenderer = electron.ipcRenderer
 
-Button('Ping to Costume', 'ping')
-Button('Set Zero Position', 'calibrate')
-Button('  External Artist  ', 'ext')
-Button('Autonomous Mode', 'auto')
-Button('External Strobo', 'extstr')
-radio('reset', 'Leds off', 'restxt')
+Button('Ping to costume', 'ping')
+Button('Set zero position', 'calibrate')
+Button('  External artist  ', 'ext')
+Button('Autonomous mode', 'auto')
+radio('reset', 'LEDs off', 'restxt')
 radio('conti', 'Continuous', 'contitxt')
 radio('fix', 'Fixed', 'fixtxt')
 radio('norm', 'Normalized', 'normtxt')
 radio('raw', 'Raw', 'rawtxt')
 radio('stand', 'Standard', 'standtxt')
-radio('pix', 'Pixel Walk', 'pixtxt')
-radio('strob', 'Strobo Effect', 'strotxt')
-label('imu', 'IMU Calibration', 'calibrate')
-label('range', 'Min-Max Range:', 'conti')
-label('commu', 'Communication', 'ping')
-label('featu', 'Software Features', 'auto')
-label('valu', 'IMU Values:', 'norm')
-label('led', 'LED Coloring:', 'stand')
+radio('pix', 'Pixel-walk', 'pixtxt')
+radio('strob', 'Stroboscope', 'strotxt')
+radio('extstr', 'External BPM', 'extstrtxt')
+label('imu', 'IMU CALIBRATION', 'calibrate')
+label('range', 'Min-Max range:', 'conti')
+label('commu', 'COMMUNICATION', 'ping')
+label('inte', 'INTERACTION', 'auto')
+label('valu', 'IMU values:', 'norm')
+label('fiber', 'Fiber coloring:', 'stand')
+label('speed', 'Speed', 'strob')
 
 let pinList = []
 let cords = Cords()
@@ -201,67 +201,77 @@ let pixtxt = document.querySelector('.pixtxt')
 let strob = document.querySelector('.strob')
 let strotxt = document.querySelector('.strotxt')
 stand.checked = true
-standtxt.style.color = 'lightgreen'
+standtxt.style.color = '#1b8f1b'
 
 stand.onclick = () => {
 	ipcRenderer.send('mod', 1)
 	pix.checked = strob.checked = false
-	standtxt.style.color = 'lightgreen'
+	standtxt.style.color = '#1b8f1b'
 	pixtxt.style.color = strotxt.style.color = 'white'
 }
 pix.onclick = () => {
 	ipcRenderer.send('mod', 2)
 	stand.checked = strob.checked = false
-	pixtxt.style.color = 'lightgreen'
+	pixtxt.style.color = '#1b8f1b'
 	standtxt.style.color = strotxt.style.color = 'white'
 }
 strob.onclick = () => {
 	colorPicker.strobocall()
 	pix.checked = stand.checked = false
-	strotxt.style.color = 'lightgreen'
+	strotxt.style.color = '#1b8f1b'
 	pixtxt.style.color = standtxt.style.color = 'white'
 }
 
 let normdom = document.querySelector('.norm')
 let normtxtdom = document.querySelector('.normtxt')
 normdom.checked = true
-normtxtdom.style.color = 'lightgreen'
+normtxtdom.style.color = '#1b8f1b'
 normdom.onclick = () => {
 	ipcRenderer.send('norm', true)
 	document.querySelector('.raw').checked = false
-	normtxtdom.style.color = 'lightgreen'
+	normtxtdom.style.color = '#1b8f1b'
 	document.querySelector('.rawtxt').style.color = 'white'
 }
 document.querySelector('.raw').onclick = () =>{
 	ipcRenderer.send('norm', false)
 	normdom.checked = false
 	normtxtdom.style.color = 'white'
-	document.querySelector('.rawtxt').style.color = 'lightgreen'
+	document.querySelector('.rawtxt').style.color = '#1b8f1b'
 }
 
 let contidom = document.querySelector('.conti')
 let contitxtdom = document.querySelector('.contitxt')
 contidom.checked = true
-contitxtdom.style.color = 'lightgreen'
+contitxtdom.style.color = '#1b8f1b'
 contidom.onclick = () => {
 	ipcRenderer.send('range', true)
 	document.querySelector('.fix').checked = false
-	contitxtdom.style.color = 'lightgreen'
+	contitxtdom.style.color = '#1b8f1b'
 	document.querySelector('.fixtxt').style.color = 'white'
 }
 document.querySelector('.fix').onclick = () =>{
 	ipcRenderer.send('range', false)
 	contidom.checked = false
 	contitxtdom.style.color = 'white'
-	document.querySelector('.fixtxt').style.color = 'lightgreen'
+	document.querySelector('.fixtxt').style.color = '#1b8f1b'
+}
+
+let extstrdom = document.querySelector('.extstr')
+let extstrtxtdom = document.querySelector('.extstrtxt')
+extstrdom.onclick = () => {
+	extstrtxtdom.style.color = '#1b8f1b'
+}
+document.querySelector('.stslider').onclick = () => {
+	extstrtxtdom.style.color = 'white'
+	extstrdom.checked = false
 }
 
 colorPicker.setColor({r: 255, g: 255, b: 255})
 pinList.forEach(i => pins[i].setColor({r: 255, g: 255, b: 255}))
 
 let IMUs = {
-	lArm : Widget({position: 'lHand' , title: 'Left Hand'}),
-	rArm : Widget({position: 'rHand', title: 'Right Hand'})
+	lArm : Widget({position: 'lHand' , title: 'LEFT HAND'}),
+	rArm : Widget({position: 'rHand', title: 'RIGHT HAND'})
 }
 
 let vib = {
@@ -347,6 +357,8 @@ ipcRenderer.on('update', (event, msg) => {
 		 if (i == 'r3lr') pins.rFoot.setColor({r: msg[i]})
 		 if (i == 'r3lg') pins.rFoot.setColor({g: msg[i]})
 		 if (i == 'r3lb') pins.rFoot.setColor({b: msg[i]})
+
+		 if (i == 'bpm') setbpm((msg[i][0]))
 
 		pinList.forEach(id => {
 			if (i == id) {

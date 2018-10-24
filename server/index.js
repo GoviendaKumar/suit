@@ -117,7 +117,9 @@ let imuAddr = (params => {
 	gzl : {arduino: '/l0gz'},    gzr: {arduino: '/r0gz'},
 	mxl : {arduino: '/l0mx'},    mxr: {arduino: '/r0mx'},
 	myl : {arduino: '/l0my'},    myr: {arduino: '/r0my'},
-	mzl : {arduino: '/l0mz'},    mzr: {arduino: '/r0mz'}
+	mzl : {arduino: '/l0mz'},    mzr: {arduino: '/r0mz'},
+	
+	bpm : {arduino: '/bpm'}
 })
 
 // on connect

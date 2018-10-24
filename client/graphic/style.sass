@@ -1,4 +1,7 @@
 
+// Google Fonts
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,300i,400')
+
 body
 	margin             : 0px
 	border-collapse    : collapse
@@ -12,6 +15,8 @@ $red    : hsl(330,100%,50%)
 $green  : hsl(77,100%,50%)
 $orange : hsl(28,100%,50%)
 $light  : hsla(200,0%,100%, .7)
+
+$robo_font : 'Roboto', sans-serif
 
 body
 	background-color    : $bg
@@ -27,11 +32,11 @@ body
 
 .appTitle
 	position    : absolute
-	left        : 50%
+	left        : 5%
 	top         : 2%
-	font-size   : 2.5vh
-	margin-left : -40vh
-	font-weight : lighter
+	font-family : $robo_font
+	font-size   : 24
+	font-weight : 400
 
 .cords
 	position : absolute
@@ -58,23 +63,14 @@ body
 		margin-top  : -12vh
 		.icon
 			right : -15px
-	&.rFoot
-		margin-left : -28vh
-		margin-top  : 18vh
-		.icon
-			left : -15px
-	&.lFoot
-		margin-left : 28vh
-		margin-top  : 18vh
-		.icon
-			right : -15px
 	&.back
 		margin-top: -12vh
 	.title
 		position      : relative
 		display       : block
-		font-weight   : lighter
-		font-size     : 11px
+		font-family : $robo_font
+		font-weight   : 300
+		font-size     : 14px
 		margin-bottom : 10px
 	.device
 		display       : block
@@ -200,10 +196,10 @@ body
 
 .stslider
 	position    : absolute
-	left        : 76.6%
-	top         : 84%
+	left        : 78.5%
+	top         : 85.5%
 	display  : inline-block
-	width    : 60px
+	width    : 75px
 	cursor   : pointer
 	border-radius : 14px
 	background    : linear-gradient(to right, rgba(white, .05), rgba(white, .15))
@@ -225,143 +221,194 @@ body
 	position    : absolute
 	left        : 48%
 	top         : 93%
-	font-size		: 13
+	font-family : $robo_font
+	font-weight : 300
+	font-size		: 14
 ///////////////////////////////////////////////
 .commu
 	position    : absolute
-	left        : 10.5%
+	left        : 9%
 	top         : 50%
+	font-family : $robo_font
+	font-weight : 300
 	font-size		: 14
 .ping
 	position    : absolute
 	left        : 10%
 	top         : 55%
-	font-size		: 11
+	font-family : $robo_font
+	font-weight : 400
+	font-size		: 12
 .ext
 	position    : absolute
 	left        : 10%
 	top         : 59%
-	font-size		: 11
-.convas1
+	font-family : $robo_font
+	font-weight : 400
+	font-size		: 12
+.rectangle1
 	position    : absolute
 	left        : 9%
 	top         : 53%
 	width 			: 117
-	height			:	85
+	height			:	82
 ////////////////////////////////////////////////
 .imu
 	position    : absolute
-	left        : 10%
+	left        : 9%
 	top         : 70%
+	font-family : $robo_font
+	font-weight : 300
 	font-size		: 14
 .calibrate
 	position    : absolute
 	left        : 10%
 	top         : 75%
-	font-size		: 11
+	font-family : $robo_font
+	font-weight : 400
+	font-size		: 12
 .range
 	position    : absolute
-	left        : 11%
+	left        : 10.2%
 	top         : 81%
-	font-size		: 13
+	font-family : $robo_font
+	font-weight : 300
+	font-size		: 14
 .conti
 	position    : absolute
-	left        : 10%
+	left        : 9.6%
 	top         : 84%
 .contitxt
 	position    : absolute
-	left        : 10%
-	top         : 86%
-	font-size		: 11
+	left        : 12.5%
+	top         : 84.1%
+	font-family : $robo_font
+	font-weight : 300
+	font-size		: 14
 .fix
 	position    : absolute
-	left        : 19%
-	top         : 84%
+	left        : 9.6%
+	top         : 87%
 .fixtxt
 	position    : absolute
-	left        : 19%
-	top         : 86%
-	font-size		: 11
-.convas2
+	left        : 12.5%
+	top         : 87.1%
+	font-family : $robo_font
+	font-weight : 300
+	font-size		: 14
+.rectangle2
 	position    : absolute
 	left        : 9%
 	top         : 73%
 	width 			: 119
-	height			:	130
+	height			:	138
 ///////////////////////////////////////////////////////
-.featu
+.inte
 	position    : absolute
-	left        : 75.2%
+	left        : 75%
 	top         : 50%
+	font-family : $robo_font
+	font-weight : 300
 	font-size		: 14
 .auto
 	position    : absolute
 	left        : 75%
 	top         : 55%
-	font-size		: 11
+	font-family : $robo_font
+	font-weight : 400
+	font-size		: 12
 .valu
 	position    : absolute
-	left        : 78%
+	left        : 76%
 	top         : 61%
-	font-size		: 13
+	font-family : $robo_font
+	font-weight : 300
+	font-size		: 14
 .norm
 	position    : absolute
-	left        : 76%
+	left        : 75.6%
 	top         : 64%
 .normtxt
 	position    : absolute
-	left        : 76%
-	top         : 66%
-	font-size		: 11
+	left        : 78.5%
+	top         : 64.1%
+	font-family : $robo_font
+	font-weight : 300
+	font-size		: 14
 .raw
 	position    : absolute
-	left        : 85%
-	top         : 64%
+	left        : 75.6%
+	top         : 67%
 .rawtxt
 	position    : absolute
-	left        : 85%
-	top         : 66%
-	font-size		: 11
-.led
+	left        : 78.5%
+	top         : 67.1%
+	font-family : $robo_font
+	font-weight : 300
+	font-size		: 14
+.fiber
 	position    : absolute
 	left        : 76%
 	top         : 72%
-	font-size		: 13
+	font-family : $robo_font
+	font-weight : 300
+	font-size		: 14
 .stand
 	position    : absolute
-	left        : 76%
+	left        : 75.6%
 	top         : 75%
 .standtxt
 	position    : absolute
-	left        : 79%
+	left        : 78.5%
 	top         : 75%
-	font-size		: 12
+	font-family : $robo_font
+	font-weight : 300
+	font-size		: 14
 .pix
 	position    : absolute
-	left        : 76%
+	left        : 75.6%
 	top         : 78%
 .pixtxt
 	position    : absolute
-	left        : 79%
+	left        : 78.5%
 	top         : 78%
-	font-size		: 12
+	font-family : $robo_font
+	font-weight : 300
+	font-size		: 14
 .strob
 	position    : absolute
-	left        : 76%
+	left        : 75.6%
 	top         : 81%
 .strotxt
 	position    : absolute
-	left        : 79%
+	left        : 78.5%
 	top         : 81%
-	font-size		: 12
+	font-family : $robo_font
+	font-weight : 300
+	font-size		: 14
+.speed
+	position    : absolute
+	left        : 78.6%
+	top         : 83.5%
+	font-family : $robo_font
+	font-weight : 300
+	font-style  : italic
+	font-size		: 11
 .extstr
 	position    : absolute
-	left        : 76%
-	top         : 87%
+	left        : 77.9%
+	top         : 87.5%
+.extstrtxt
+	position    : absolute
+	left        : 80.2%
+	top         : 87.9%
+	font-family : $robo_font
+	font-weight : 300i
+	font-style  : italic
 	font-size		: 11
-.convas3
+.rectangle3
 	position    : absolute
 	left        : 74%
 	top         : 53%
 	width 			: 130
-	height			:	300
+	height			:	310
