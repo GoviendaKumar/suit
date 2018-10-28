@@ -51,17 +51,6 @@ sendToUi = (key, value) => {
 	}
 }
 
-let constatus = 0
-setInterval(function () {
-	constatus = 0
-	setTimeout(connection, 1000)
-}, 1000)
-
-let connection = () => {
-	if (constatus == 1) sendToUi(0, 'connected')
-	else sendToUi(0, 'disconnected')
-}
-
 let ledAddr = (params => {
 	for (let i in params)
 		params[i].value = storage.get(i)
@@ -117,20 +106,78 @@ let imuAddr = (params => {
 	gzl : {arduino: '/l0gz'},    gzr: {arduino: '/r0gz'},
 	mxl : {arduino: '/l0mx'},    mxr: {arduino: '/r0mx'},
 	myl : {arduino: '/l0my'},    myr: {arduino: '/r0my'},
-	mzl : {arduino: '/l0mz'},    mzr: {arduino: '/r0mz'},
-	
-	bpm : {arduino: '/bpm'}
+	mzl : {arduino: '/l0mz'},    mzr: {arduino: '/r0mz'}
 })
+
+
+ipcMain.on('ready', (event, arg) => {
+	for (let i in ledAddr)
+		sendToUi(i, ledAddr[i].value)
+})
+
+let norm = true
+ipcMain.on('norm', (event, arg) => {
+	norm = arg
+})
+
+ipcMain.on('mod', (event, arg) => {
+	mod = arg
+})
+
+ipcMain.on('reset', () => {
+	for (let i in ledAddr) {
+		sendToArduino(ledAddr[i].arduino, 0)
+		sendToUi(i, 0)
+	}
+})
+ipcMain.on('ping', () => {
+	sendToArduino('/ping')
+})
+ipcMain.on('calibrate' , () => {
+	lr = l1 = l2 = l3 = l4 = l5 = l6 = l7 = l8 = l9 = r1 = r2 = r3 = r4 = r5 = r6 = r7 = r8 = r9 = true
+})
+ipcMain.on('range', (event, arg) => {
+	range = arg
+})
+ipcMain.on('auto', (event, arg) => {
+	auto = arg
+})
+let ext = false
+ipcMain.on('ext', (event, arg) => {
+	ext = arg
+})
+let extstr = false
+ipcMain.on('extstr', (event, arg) => {
+	extstr = arg
+})
+
+let rgb = { ls: {r: 0, g: 0, b: 0}, rs: {r: 0, g: 0, b: 0}}
+// on ui change
+ipcMain.on('ui', (event, arg) => {
+	for (let i in arg) {
+		let v = arg[i]
+		ledAddr[i].value = v
+		storage.set(i, v)
+		if (mod == 1)
+		sendToArduino(ledAddr[i].arduino, v)
+		else if (mod == 2) {
+			if (i == 'l0lr') rgb.ls.r = v
+			if (i == 'l0lg') rgb.ls.g = v
+			if (i == 'l0lb') rgb.ls.b = v
+			if (i == 'l0lr') colorflow(rgb, 'left', mod)
+			if (i == 'r0lr') rgb.rs.r = v
+			if (i == 'r0lg') rgb.rs.g = v
+			if (i == 'r0lb') rgb.rs.b = v
+			if (i == 'r0lr') colorflow(rgb, 'right', mod)
+		}
+	}
+})
+
 
 // on connect
 udpPort.on('ready', () => {
 	for (let i in ledAddr)
 	sendToArduino(ledAddr[i].arduino, ledAddr[i].value)
-})
-
-ipcMain.on('ready', (event, arg) => {
-	for (let i in ledAddr)
-		sendToUi(i, ledAddr[i].value)
 })
 
 udpPort.on("message", (oscMsg) => {
@@ -139,20 +186,29 @@ udpPort.on("message", (oscMsg) => {
 
 extPort.on("message", (oscMsg) => {
 	//console.log(oscMsg.address, oscMsg.args)
+	if (ext){
 	for (let i in ledAddr) {
-		if (ext && oscMsg.address == ledAddr[i].arduino) {
+		if (oscMsg.address == ledAddr[i].arduino) {
 			sendToArduino(oscMsg.address, oscMsg.args)
 			sendToUi(i, oscMsg.args)
 			break
 		}
-	}
+	}}
+	if(extstr && oscMsg.address == '/bpm')
+	sendToUi('bpm', oscMsg.args)
 })
 
-let norm = true
-ipcMain.on('norm', (event, arg) => {
-	norm = arg
-})
 
+let constatus = 0
+setInterval(function () {
+	constatus = 0
+	setTimeout(connection, 1000)
+}, 1000)
+
+let connection = () => {
+	if (constatus == 1) sendToUi(0, 'connected')
+	else sendToUi(0, 'disconnected')
+}
 // on arduino change
 udpPort.on('bundle', (oscBundle, timeTag, info) => {
 	constatus = 1
@@ -185,53 +241,6 @@ midi.on('message', (time, data) => {
 	}
 })
 
-ipcMain.on('mod', (event, arg) => {
-	mod = arg
-})
-let rgb = { ls: {r: 0, g: 0, b: 0}, rs: {r: 0, g: 0, b: 0}}
-// on ui change
-ipcMain.on('ui', (event, arg) => {
-	for (let i in arg) {
-		let v = arg[i]
-		ledAddr[i].value = v
-		storage.set(i, v)
-		if (mod == 1)
-		sendToArduino(ledAddr[i].arduino, v)
-		else if (mod == 2) {
-			if (i == 'l0lr') rgb.ls.r = v
-			if (i == 'l0lg') rgb.ls.g = v
-			if (i == 'l0lb') rgb.ls.b = v
-			if (i == 'l0lr') colorflow(rgb, 'left', mod)
-			if (i == 'r0lr') rgb.rs.r = v
-			if (i == 'r0lg') rgb.rs.g = v
-			if (i == 'r0lb') rgb.rs.b = v
-			if (i == 'r0lr') colorflow(rgb, 'right', mod)
-		}
-	}
-})
-
-ipcMain.on('reset', () => {
-	for (let i in ledAddr) {
-		sendToArduino(ledAddr[i].arduino, 0)
-		sendToUi(i, 0)
-	}
-})
-ipcMain.on('ping', () => {
-	sendToArduino('/ping')
-})
-ipcMain.on('calibrate' , () => {
-	lr = l1 = l2 = l3 = l4 = l5 = l6 = l7 = l8 = l9 = r1 = r2 = r3 = r4 = r5 = r6 = r7 = r8 = r9 = true
-})
-ipcMain.on('range', (event, arg) => {
-	range = arg
-})
-ipcMain.on('auto', (event, arg) => {
-	auto = arg
-})
-let ext = false
-ipcMain.on('ext', (event, arg) => {
-	ext = arg
-})
 
 // midi house work
 console.log(`[midi] devices found:`)
