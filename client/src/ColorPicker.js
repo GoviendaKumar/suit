@@ -98,8 +98,9 @@ export let ColorPicker = ({
 			stslider.getBoundingClientRect().left -
 			stvalue.offsetWidth / 2
 		let stlMax = stslider.offsetWidth - stvalue.offsetWidth
-		bpm = stlRaw < 0? 0: stlRaw > stlMax? stlMax: stlRaw
-		stvalue.style.left = bpm + 'px'
+		let revbpm = stlRaw < 0? 0: stlRaw > stlMax? stlMax: stlRaw
+		stvalue.style.left = revbpm + 'px'
+		bpm = 65 - revbpm
 		e.stopPropagation()
 	}
 	dragAndDrop(stslider, {
