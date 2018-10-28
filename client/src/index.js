@@ -10,10 +10,6 @@ import {Button, radio, label} from './Buttons'
 
 const EventEmitter = require('events')
 
-var Quaternion = require('quaternion')
-var q = new Quaternion("99.3+8i")
-console.log(q)
-
 const ipcRenderer = electron.ipcRenderer
 
 Button('Ping to costume', 'ping')
@@ -36,6 +32,7 @@ label('inte', 'INTERACTION', 'auto')
 label('valu', 'IMU values:', 'norm')
 label('fiber', 'Fiber coloring:', 'stand')
 label('speed', 'Speed', 'strob')
+
 
 let pinList = []
 let cords = Cords()
@@ -114,6 +111,25 @@ let colorPicker = ColorPicker({
 		})
 	}
 })
+
+
+colorPicker.setColor({r: 255, g: 255, b: 255})
+pinList.forEach(i => pins[i].setColor({r: 255, g: 255, b: 255}))
+
+let IMUs = {
+	lArm : Widget({position: 'lHand' , title: 'LEFT HAND'}),
+	rArm : Widget({position: 'rHand', title: 'RIGHT HAND'})
+}
+
+let vib = {
+	lArm : vibWidget({position: 'back', title: 'Back'})
+}
+
+loop(() => {
+	for (let i in IMUs) IMUs[i].draw()
+	cords.draw(pinList, pins, colorPicker.wheel)
+})
+
 
 document.querySelector('.reset').onclick = () => {
 	ipcRenderer.send('reset')
@@ -208,15 +224,21 @@ stand.onclick = () => {
 	pix.checked = strob.checked = false
 	standtxt.style.color = '#1b8f1b'
 	pixtxt.style.color = strotxt.style.color = 'white'
+	multcall = true
 }
 pix.onclick = () => {
 	ipcRenderer.send('mod', 2)
 	stand.checked = strob.checked = false
 	pixtxt.style.color = '#1b8f1b'
 	standtxt.style.color = strotxt.style.color = 'white'
+	multcall = true
 }
+let multcall = true
 strob.onclick = () => {
-	colorPicker.strobocall()
+	if (multcall) {
+		colorPicker.strobocall()
+		multcall = false
+	}
 	pix.checked = stand.checked = false
 	strotxt.style.color = '#1b8f1b'
 	pixtxt.style.color = standtxt.style.color = 'white'
@@ -259,33 +281,19 @@ document.querySelector('.fix').onclick = () =>{
 let extstrdom = document.querySelector('.extstr')
 let extstrtxtdom = document.querySelector('.extstrtxt')
 extstrdom.onclick = () => {
+	ipcRenderer.send('extstr', true)
 	extstrtxtdom.style.color = '#1b8f1b'
 }
+
 document.querySelector('.stslider').onclick = () => {
 	extstrtxtdom.style.color = 'white'
 	extstrdom.checked = false
+	ipcRenderer.send('extstr', false)
 }
 
-colorPicker.setColor({r: 255, g: 255, b: 255})
-pinList.forEach(i => pins[i].setColor({r: 255, g: 255, b: 255}))
-
-let IMUs = {
-	lArm : Widget({position: 'lHand' , title: 'LEFT HAND'}),
-	rArm : Widget({position: 'rHand', title: 'RIGHT HAND'})
-}
-
-let vib = {
-	lArm : vibWidget({position: 'back', title: 'Back'})
-}
-
-loop(() => {
-	for (let i in IMUs) IMUs[i].draw()
-	cords.draw(pinList, pins, colorPicker.wheel)
-})
 
 let con = true
 let con1 = true
-
 ipcRenderer.on('connected', (event, msg) => {
 	if (con) {
 		document.body.style.backgroundImage = "url('./graphic/bodyg.png')"
