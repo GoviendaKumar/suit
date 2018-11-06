@@ -1,4 +1,4 @@
-
+/////////////////////////////////////////////pixel walk function
 let colorflow = (rgb, side, mod) => {
   if(side == 'left'||side == 'both'){
 		sendToArduino('/l0lr', rgb.ls.r); sendToUi('l0lr', rgb.ls.r)

@@ -23,8 +23,8 @@ module.exports = env => {
 			},{
 				test    : /\.(sass)$/,
 				loaders : [
-					'style-loader', 
-					'css-loader', 
+					'style-loader',
+					'css-loader',
 					'sass-loader?sourceMap'],
 				exclude	: /node_modules/
 			},{
@@ -32,7 +32,7 @@ module.exports = env => {
 				loader: 'file-loader?name=./graphic/[name].[ext]',
 				exclude	: /node_modules/
 			},{
-				test: /\.(jpg|png|svg)$/, 
+				test: /\.(jpg|png|svg)$/,
 				loader: 'url-loader',
 				exclude	: /node_modules/
 			}]

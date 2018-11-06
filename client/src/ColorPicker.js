@@ -114,7 +114,7 @@ export let ColorPicker = ({
 	let strobo = () => {
 		let strobcheck = document.querySelector('.strob')
 		if (strobcheck.checked == true) {
-			setTimeout(strobo, bpm*1.5+10)
+			setTimeout(strobo, bpm*1.5+10)      //recursive call for stroboscope after timeout set by slider
 		}
 		stro = 10 - Math.abs(n++ % 20 - 10)
 		if(stro == 0) hsv.v = 0

@@ -21,7 +21,7 @@ export let vibBut = ({
 		}
 	}
 }
-
+////////////////////////////////////////////general structure for button creation
 export let Button = (txt, clas) => {
 	let b = document.createElement('input')
   b.type = 'button'
@@ -29,7 +29,7 @@ export let Button = (txt, clas) => {
 	b.classList.add(clas)
   document.body.appendChild(b)
 }
-
+////////////////////////////////////////////general structure for radio button creation
 export let radio = (clas, txt, tclas) => {
 	let r = document.createElement('input')
   r.type = 'radio'
@@ -40,7 +40,7 @@ export let radio = (clas, txt, tclas) => {
 	l.classList.add(tclas)
   document.body.insertBefore(l, document.querySelector(clas))
 }
-
+////////////////////////////////////////////general structure for label creation
 export let label = (clas, txt, bclas) => {
 	let l = document.createElement('label')
 	l.appendChild(document.createTextNode(txt))

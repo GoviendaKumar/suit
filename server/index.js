@@ -115,20 +115,18 @@ ipcMain.on('ready', (event, arg) => {
 		sendToUi(i, ledAddr[i].value)
 })
 
+////////////////////////////////////////////// get updates from ui in ipcMain event listener
 let norm = true
 ipcMain.on('norm', (event, arg) => {
 	norm = arg
 })
-
 ipcMain.on('mod', (event, arg) => {
 	mod = arg
 })
-
 ipcMain.on('reset', () => {
 	for (let i in ledAddr) {
 		sendToArduino(ledAddr[i].arduino, 0)
-		sendToUi(i, 0)
-	}
+		sendToUi(i, 0)}
 })
 ipcMain.on('ping', () => {
 	sendToArduino('/ping')
@@ -150,9 +148,7 @@ let extstr = false
 ipcMain.on('extstr', (event, arg) => {
 	extstr = arg
 })
-
 let rgb = { ls: {r: 0, g: 0, b: 0}, rs: {r: 0, g: 0, b: 0}}
-// on ui change
 ipcMain.on('ui', (event, arg) => {
 	for (let i in arg) {
 		let v = arg[i]
@@ -173,42 +169,23 @@ ipcMain.on('ui', (event, arg) => {
 	}
 })
 
-
-// on connect
-udpPort.on('ready', () => {
-	for (let i in ledAddr)
-	sendToArduino(ledAddr[i].arduino, ledAddr[i].value)
-})
-
-udpPort.on("message", (oscMsg) => {
-	if (oscMsg.address == '/ping') sendToUi(0, 'ping')
-})
-
-extPort.on("message", (oscMsg) => {
-	//console.log(oscMsg.address, oscMsg.args)
-	if (ext){
-	for (let i in ledAddr) {
-		if (oscMsg.address == ledAddr[i].arduino) {
-			sendToArduino(oscMsg.address, oscMsg.args)
-			sendToUi(i, oscMsg.args)
-			break
-		}
-	}}
-	if(extstr && oscMsg.address == '/bpm')
-	sendToUi('bpm', oscMsg.args)
-})
-
-
+//check connection every second
 let constatus = 0
 setInterval(function () {
 	constatus = 0
 	setTimeout(connection, 1000)
 }, 1000)
-
 let connection = () => {
 	if (constatus == 1) sendToUi(0, 'connected')
 	else sendToUi(0, 'disconnected')
 }
+
+/////////////////////////////////////////////////////////////////osc over udp on connect
+udpPort.on('ready', () => {
+	for (let i in ledAddr)
+	sendToArduino(ledAddr[i].arduino, ledAddr[i].value)
+})
+
 // on arduino change
 udpPort.on('bundle', (oscBundle, timeTag, info) => {
 	constatus = 1
@@ -226,6 +203,25 @@ udpPort.on('bundle', (oscBundle, timeTag, info) => {
 		}
 	})
 })
+// on message from arduino
+udpPort.on("message", (oscMsg) => {
+	if (oscMsg.address == '/ping') sendToUi(0, 'ping')
+})
+
+// on message from external artist
+extPort.on("message", (oscMsg) => {
+	//console.log(oscMsg.address, oscMsg.args)
+	if (ext){
+	for (let i in ledAddr) {
+		if (oscMsg.address == ledAddr[i].arduino) {
+			sendToArduino(oscMsg.address, oscMsg.args)
+			sendToUi(i, oscMsg.args)
+			break
+		}
+	}}
+	if(extstr && oscMsg.address == '/bpm')
+	sendToUi('bpm', oscMsg.args)
+})
 
 // on midi change
 midi.on('message', (time, data) => {
@@ -240,7 +236,6 @@ midi.on('message', (time, data) => {
 		}
 	}
 })
-
 
 // midi house work
 console.log(`[midi] devices found:`)

@@ -23,7 +23,7 @@ export let map = (
 		(bMax - bMin) + bMin
 	)
 }
-
+////////////////////////////////////////// html page drag and drop event listener
 export let dragAndDrop = (dom, {
 	onDown = () => {},
 	onMove = () => {},

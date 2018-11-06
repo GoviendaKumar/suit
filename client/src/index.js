@@ -12,6 +12,7 @@ const EventEmitter = require('events')
 
 const ipcRenderer = electron.ipcRenderer
 
+////////////////////////////////////////////////////////////    create buttons, radios, labels in html page
 Button('Ping to costume', 'ping')
 Button('Set zero position', 'calibrate')
 Button('  External artist  ', 'ext')
@@ -33,7 +34,7 @@ label('valu', 'IMU values:', 'norm')
 label('fiber', 'Fiber coloring:', 'stand')
 label('speed', 'Speed', 'strob')
 
-
+////////////////////////////////////////////////////       pins and cords initialization
 let pinList = []
 let cords = Cords()
 
@@ -71,6 +72,7 @@ for (let i in pins) {
 	pinList.push(i)
 }
 
+/////////////////////////////////////////////////////    select all pins event handling
 let sallpins = Pin ({
 	position : 'aPin',
 	onClick (e) {
@@ -79,6 +81,7 @@ let sallpins = Pin ({
 	}
 })
 
+/////////////////////////////////////////////////////    send color values of each pin to server
 let colorPicker = ColorPicker({
 	onColorChange (rgb) {
 		document.querySelector('.reset').checked = false
@@ -112,10 +115,10 @@ let colorPicker = ColorPicker({
 	}
 })
 
-
 colorPicker.setColor({r: 255, g: 255, b: 255})
 pinList.forEach(i => pins[i].setColor({r: 255, g: 255, b: 255}))
 
+///////////////////////////////////////////////////////////////////// widget creation of imu graph and vibration animation
 let IMUs = {
 	lArm : Widget({position: 'lHand' , title: 'LEFT HAND'}),
 	rArm : Widget({position: 'rHand', title: 'RIGHT HAND'})
@@ -130,14 +133,14 @@ loop(() => {
 	cords.draw(pinList, pins, colorPicker.wheel)
 })
 
-
+//////////////////////////////////////////////////////// reset button interaction
 document.querySelector('.reset').onclick = () => {
 	ipcRenderer.send('reset')
   for (let i in pins) {
 		pins[i].setColor({r: 0, g: 0, b: 0})
 	}
 }
-
+//////////////////////////////////////////////////////// ping button interaction
 let pingdom = document.querySelector('.ping')
 		pingdom.style.backgroundColor = 'white'
 		pingdom.style.color = 'black'
@@ -150,7 +153,7 @@ pingdom.onmouseup = () => {
 	pingdom.style.backgroundColor = 'white'
 	pingdom.style.color = 'black'
 }
-
+//////////////////////////////////////////////////////// set zero position button interaction
 let calibdom = document.querySelector('.calibrate')
 		calibdom.style.backgroundColor = 'white'
 		calibdom.style.color = 'black'
@@ -163,7 +166,7 @@ calibdom.onmouseup = () => {
 	calibdom.style.backgroundColor = 'white'
 	calibdom.style.color = 'black'
 }
-
+//////////////////////////////////////////////////////// external button button interaction
 let ext = 0
 let extdom = document.querySelector('.ext')
 		extdom.style.color = 'black'
@@ -186,7 +189,7 @@ extdom.onmousedown = () => {
 	if (ext == 0) extdom.style.color = 'white'
 	else extdom.style.color = 'grey'
 }
-
+//////////////////////////////////////////////////////// auto mod button interaction
 let aut = 0
 let autodom = document.querySelector('.auto')
 		autodom.style.color = 'black'
@@ -209,7 +212,7 @@ autodom.onmousedown = () => {
 	if (aut == 0) autodom.style.color = 'white'
 	else autodom.style.color = 'grey'
 }
-
+//////////////////////////////////////////////////////// fiber coloring radio buttons interaction
 let stand = document.querySelector('.stand')
 let standtxt = document.querySelector('.standtxt')
 let pix = document.querySelector('.pix')
@@ -243,7 +246,7 @@ strob.onclick = () => {
 	strotxt.style.color = '#1b8f1b'
 	pixtxt.style.color = standtxt.style.color = 'white'
 }
-
+//////////////////////////////////////////////////////// IMU values radio buttons interaction
 let normdom = document.querySelector('.norm')
 let normtxtdom = document.querySelector('.normtxt')
 normdom.checked = true
@@ -260,7 +263,7 @@ document.querySelector('.raw').onclick = () =>{
 	normtxtdom.style.color = 'white'
 	document.querySelector('.rawtxt').style.color = '#1b8f1b'
 }
-
+//////////////////////////////////////////////////////// range radio buttons interaction
 let contidom = document.querySelector('.conti')
 let contitxtdom = document.querySelector('.contitxt')
 contidom.checked = true
@@ -277,21 +280,20 @@ document.querySelector('.fix').onclick = () =>{
 	contitxtdom.style.color = 'white'
 	document.querySelector('.fixtxt').style.color = '#1b8f1b'
 }
-
+//////////////////////////////////////////////////////// external stroboscope button interaction
 let extstrdom = document.querySelector('.extstr')
 let extstrtxtdom = document.querySelector('.extstrtxt')
 extstrdom.onclick = () => {
 	ipcRenderer.send('extstr', true)
 	extstrtxtdom.style.color = '#1b8f1b'
 }
-
 document.querySelector('.stslider').onclick = () => {
 	extstrtxtdom.style.color = 'white'
 	extstrdom.checked = false
 	ipcRenderer.send('extstr', false)
 }
 
-
+//////////////////////////////////////////////////////// change body.png for connection status and ping
 let con = true
 let con1 = true
 ipcRenderer.on('connected', (event, msg) => {
@@ -301,7 +303,6 @@ ipcRenderer.on('connected', (event, msg) => {
 		con1 = true
 	}
 })
-
 ipcRenderer.on('disconnected', (event, msg) => {
 	if (con1) {
 		document.body.style.backgroundImage = "url('./graphic/body.png')"
@@ -309,18 +310,18 @@ ipcRenderer.on('disconnected', (event, msg) => {
 		con = true
 	}
 })
-
 ipcRenderer.on('ping', (event, msg) => {
 	document.body.style.backgroundImage = "url('./graphic/bodyr.png')"
 	con = true
 	con1 = true
 })
 
+//////////////////////////////////////////////////////////////       Get updates from server
 ipcRenderer.on('update', (event, msg) => {
 	for (let i in msg) {
-		 if (i == 'vibro') vib.lArm.setState((msg[i][0]))
+		 if (i == 'vibro') vib.lArm.setState((msg[i][0]))/////vibration signal
 
-		 if (i == 'axl') IMUs.lArm.acc.x.record(msg[i])
+		 if (i == 'axl') IMUs.lArm.acc.x.record(msg[i])///////send IMU values to graph
 		 if (i == 'ayl') IMUs.lArm.acc.y.record(msg[i])
 		 if (i == 'azl') IMUs.lArm.acc.z.record(msg[i])
 		 if (i == 'gxl') IMUs.lArm.gyro.x.record(msg[i])
@@ -340,7 +341,7 @@ ipcRenderer.on('update', (event, msg) => {
 		 if (i == 'myr') IMUs.rArm.magn.y.record(msg[i])
 		 if (i == 'mzr') IMUs.rArm.magn.z.record(msg[i])
 
-		 if (i == 'l0lr') pins.lArm.setColor({r: msg[i]})
+		 if (i == 'l0lr') pins.lArm.setColor({r: msg[i]})////////send LED values to interface pins
 		 if (i == 'l0lg') pins.lArm.setColor({g: msg[i]})
 		 if (i == 'l0lb') pins.lArm.setColor({b: msg[i]})
 		 if (i == 'l1lr') pins.lRibs.setColor({r: msg[i]})
@@ -366,7 +367,7 @@ ipcRenderer.on('update', (event, msg) => {
 		 if (i == 'r3lg') pins.rFoot.setColor({g: msg[i]})
 		 if (i == 'r3lb') pins.rFoot.setColor({b: msg[i]})
 
-		 if (i == 'bpm') setbpm((msg[i][0]))
+		 if (i == 'bpm') setbpm((msg[i][0]))//////////////////send external bpm to stroboscope
 
 		pinList.forEach(id => {
 			if (i == id) {

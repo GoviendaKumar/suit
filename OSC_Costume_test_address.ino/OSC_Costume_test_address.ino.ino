@@ -52,8 +52,8 @@ boolean faderChanged = false;
 
 
 //NEO pixel init
-Adafruit_NeoPixel pixels1 = Adafruit_NeoPixel(NUMPIXELS, PIN_STRIPE_1, NEO_RGB + NEO_KHZ800);
-Adafruit_NeoPixel pixels2 = Adafruit_NeoPixel(NUMPIXELS, PIN_STRIPE_2, NEO_RGB + NEO_KHZ800);
+Adafruit_NeoPixel pixels1 = Adafruit_NeoPixel(NUMPIXELS, PIN_STRIPE_1, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel pixels2 = Adafruit_NeoPixel(NUMPIXELS, PIN_STRIPE_2, NEO_GRB + NEO_KHZ800);
 
 //VIBRO
 const int vibro = VIBRO;

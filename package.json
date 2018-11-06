@@ -19,7 +19,7 @@
     "electron-packager": "^11.0.1",
     "electron-rebuild": "^1.7.3",
     "electron-reload": "^1.2.2",
-    "file-loader": "^1.1.10",
+    "file-loader": "^1.1.11",
     "ip": "^1.1.5",
     "loader-utils": "^1.1.0",
     "node-sass": "^4.9.0",
@@ -35,6 +35,7 @@
     "midi": "^0.9.5",
     "osc": "2.2.0",
     "quaternion": "^1.0.5",
-    "socket.io": "^2.0.4"
+    "socket.io": "^2.0.4",
+    "typeface-roboto": "0.0.54"
   }
 }

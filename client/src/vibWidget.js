@@ -12,8 +12,6 @@ export let vibWidget = ({
 	let widget = document.createElement('div')
 	widget.classList.add('widget', position)
 	parent.appendChild(widget)
-	//widget.onclick = e => e.stopPropagation()
-	// button
 	let vibro = vibBut({
 		parent: widget,
 		name : 'Vibrate',
