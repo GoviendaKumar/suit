@@ -3,7 +3,12 @@
 # About
 
 This project is about an interactive suit. How to use NodeJs and Webpack, see for the __Introduction in DEV Environment__ section.
-
+# Electron installation Mac
+- use following commands to install electron if permission error occurs
+  `sudo npm install -g electron --unsafe-perm=true --allow-root`
+- download `asoundlib.h` ubuntu package if midi doesn't work
+   https://packages.ubuntu.com/search?lang=hu&suite=lucid&arch=amd64&mode=filename&searchon=contents&keywords=asoundlib.h
+  
 # Quick Start
 - pull from git
 - cd to the root of the project
@@ -60,5 +65,6 @@ This project is about an interactive suit. How to use NodeJs and Webpack, see fo
 - Anton Kluev
 	- dev@antonkluev.com
 	- https://github.com/antonkluev
+	- https://github.com/GoviendaKumar
 
 
