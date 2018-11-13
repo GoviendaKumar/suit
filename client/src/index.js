@@ -238,6 +238,7 @@ pix.onclick = () => {
 }
 let multcall = true
 strob.onclick = () => {
+	ipcRenderer.send('mod', 1)
 	if (multcall) {
 		colorPicker.strobocall()
 		multcall = false
