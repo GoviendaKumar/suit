@@ -1,11 +1,12 @@
-
+// color selection, slider and stroboscope slider
 import {map, dragAndDrop, HSVtoRGB, RGBtoHSV} from './helpers'
-
+// by Govienda
+// stroboscope external bpm
 let bpm = 75
 export let setbpm = (v) => {
 	 bpm = v
 }
-
+// by Anton till line 85
 export let ColorPicker = ({
 	parent = document.body,
 	onColorChange = () => {}
@@ -83,16 +84,15 @@ export let ColorPicker = ({
 		onMove : setValue
 	})
 
-
-	//stroboslider
+// by Govienda till line 124
+	// stroboslider
 	let stslider = document.createElement('div')
 	stslider.classList.add('stslider')
 	document.body.appendChild(stslider)
-	//strobovalue
+	// stroboBPM
 	let stvalue = document.createElement('div')
 	stvalue.classList.add('stvalue')
 	stslider.appendChild(stvalue)
-	// strobovalue
 	let setstValue = e => {
 		let stlRaw = e.pageX -
 			stslider.getBoundingClientRect().left -
@@ -114,7 +114,7 @@ export let ColorPicker = ({
 	let strobo = () => {
 		let strobcheck = document.querySelector('.strob')
 		if (strobcheck.checked == true) {
-			setTimeout(strobo, bpm*1.5+10)      //recursive call for stroboscope after timeout set by slider
+			setTimeout(strobo, bpm*1.5+10) // recursive call for stroboscope after timeout set by slider
 		}
 		stro = 10 - Math.abs(n++ % 20 - 10)
 		if(stro == 0) hsv.v = 0
@@ -122,7 +122,7 @@ export let ColorPicker = ({
 		wheel.style.opacity = map(hsv.v, 0, 1, .2, .5)
 		onColorChange(HSVtoRGB(hsv))
 	}
-
+  // by Anton till line 145
 	// interface
 	return {
 		wheel,
@@ -143,6 +143,7 @@ export let ColorPicker = ({
 			hue.style.left = huePosition.x + wheelRect.width /2 + 'px'
 			hue.style.top  = huePosition.y + wheelRect.height/2 + 'px'
 		},
+		// by Govienda
 		strobocall(){
 			strobo()
 		}

@@ -1,4 +1,5 @@
-
+// main file for server side(interface and OSC communication) handling
+// by Anton till line 32
 console.log(`\nServer Started ${new Date()}\n`)
 
 const {
@@ -30,11 +31,13 @@ sendToArduino = (address, args) => {
 		'192.168.1.6', 8000)
 }
 
+// by Govienda
 sendToExt = (address, args) => {
  	extPort.send({address, args},
 	 	'192.168.1.1', 8000)
 }
 
+// modified by Govienda
 sendToUi = (key, value) => {
 	let win = BrowserWindow.getAllWindows()
 	if (win.length > 0) {
@@ -51,12 +54,13 @@ sendToUi = (key, value) => {
 	}
 }
 
+// by Anton, completed and modified by Govienda till line 124
 let ledAddr = (params => {
 	for (let i in params)
 		params[i].value = storage.get(i)
 	return params
 })({
-	vibro : {
+	vibro : { // for midi
 		arduino : '/v1',
 		midi    : 76,
 		midiMap : v => v == 0? 0: 1
@@ -77,7 +81,10 @@ let ledAddr = (params => {
 		midi    : 9,
 		midiMap : v => v/127
 	},
+	// for osc
 	//address matching for LEDS   Left and Right
+	// '/l0lr' = osc address pattern for LEDs as 'Left side, 0th number, Led, Red value'
+	// same sequence for others
 	l0lr: {arduino: '/l0lr'},    r0lr: {arduino: '/r0lr'},
 	l0lg: {arduino: '/l0lg'},    r0lg: {arduino: '/r0lg'},
 	l0lb: {arduino: '/l0lb'},    r0lb: {arduino: '/r0lb'},
@@ -98,6 +105,7 @@ let imuAddr = (params => {
 	return params
 })({
   //address matching for IMUs Left and Right
+	// '/l0ax' = osc address pattern for IMU as 'Left side, 0th number, accelero/gyro/magneto, X value'
 	axl : {arduino: '/l0ax'},    axr: {arduino: '/r0ax'},
 	ayl : {arduino: '/l0ay'},    ayr: {arduino: '/r0ay'},
 	azl : {arduino: '/l0az'},    azr: {arduino: '/r0az'},
@@ -114,8 +122,8 @@ ipcMain.on('ready', (event, arg) => {
 	for (let i in ledAddr)
 		sendToUi(i, ledAddr[i].value)
 })
-
-////////////////////////////////////////////// get updates from ui in ipcMain event listener
+// by Govienda till line 189
+// get updates from ui in ipcMain event listener
 let norm = true
 ipcMain.on('norm', (event, arg) => {
 	norm = arg
@@ -156,7 +164,7 @@ ipcMain.on('ui', (event, arg) => {
 		storage.set(i, v)
 		if (mod == 1)
 		sendToArduino(ledAddr[i].arduino, v)
-		else if (mod == 2) {
+		else if (mod == 2) {// for pixel walk
 			if (i == 'l0lr') rgb.ls.r = v
 			if (i == 'l0lg') rgb.ls.g = v
 			if (i == 'l0lb') rgb.ls.b = v
@@ -169,7 +177,7 @@ ipcMain.on('ui', (event, arg) => {
 	}
 })
 
-//check connection every second
+// check connection every second
 let constatus = 0
 setInterval(function () {
 	constatus = 0
@@ -179,13 +187,13 @@ let connection = () => {
 	if (constatus == 1) sendToUi(0, 'connected')
 	else sendToUi(0, 'disconnected')
 }
-
-/////////////////////////////////////////////////////////////////osc over udp on connect
+// by Anton
+// osc over udp on connect
 udpPort.on('ready', () => {
 	for (let i in ledAddr)
 	sendToArduino(ledAddr[i].arduino, ledAddr[i].value)
 })
-
+// modified by Govienda
 // on arduino change
 udpPort.on('bundle', (oscBundle, timeTag, info) => {
 	constatus = 1
@@ -207,7 +215,7 @@ udpPort.on('bundle', (oscBundle, timeTag, info) => {
 udpPort.on("message", (oscMsg) => {
 	if (oscMsg.address == '/ping') sendToUi(0, 'ping')
 })
-
+// by Govienda
 // on message from external artist
 extPort.on("message", (oscMsg) => {
 	//console.log(oscMsg.address, oscMsg.args)
@@ -223,6 +231,7 @@ extPort.on("message", (oscMsg) => {
 	sendToUi('bpm', oscMsg.args)
 })
 
+//by Anton till line 255
 // on midi change
 midi.on('message', (time, data) => {
 	for (let i in ledAddr) {
@@ -244,7 +253,7 @@ for (let i = 0; i < midi.getPortCount(); i ++) {
 	console.log(`\t${i} :`, name)
 	if (name.match('Numark iDJ Live II')) midi.openPort(i)
 }
-
+// by Govienda
 // OSC error handling
 udpPort.on("error", function (error) {
     console.log("An error occurred in udpPort: ", error.message);
@@ -253,7 +262,7 @@ udpPort.on("error", function (error) {
 extPort.on("error", function (error) {
     console.log("An error occurred in extPort: ", error.message);
 })
-
+// by Anton
 // osc house work
 udpPort.open()
 extPort.open()

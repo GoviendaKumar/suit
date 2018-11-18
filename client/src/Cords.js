@@ -1,4 +1,5 @@
-
+// cords creation and handling
+//by Anton
 export let Cords = ({
 	parent = document.body
 } = {}) => {

@@ -1,4 +1,5 @@
-
+// imu graph creation and handler for UI
+// by Anton
 import electron from 'electron'
 const ipcRenderer = electron.ipcRenderer
 

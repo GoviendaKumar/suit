@@ -1,3 +1,5 @@
+// vibration button handler
+// by Anton modified by Govienda
 import electron from 'electron'
 const ipcRenderer = electron.ipcRenderer
 

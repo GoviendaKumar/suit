@@ -1,5 +1,6 @@
-
-//import {map} from './helpers'
+// pins creation, selection and their color handling
+// by Anton
+// import {map} from './helpers'
 import electron from 'electron'
 
 export let Pin = ({

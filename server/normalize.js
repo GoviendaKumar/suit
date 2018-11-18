@@ -1,6 +1,5 @@
-
-///////////////////////// it is better not to use object oriented programming here as for autonomous feature colors are selected in combinations
-
+// normalization of imu values and autonomous mod
+// by Govienda
 const colorflow = require('./colorflow')
 
 let lr = l1 = l2 = l3 = l4 = l5 = l6 = l7 = l8 = l9 = r1 = r2 = r3 = r4 = r5 = r6 = r7 = r8 = r9 = true
@@ -21,23 +20,23 @@ let imuR = {
 	  m: {x:{min: 0, max: 0, v: 0}, y:{min: 0, max: 0, v: 0}, z:{min: 0, max: 0, v: 0}}
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////    normalization and autonomous funtion
+// normalization and autonomous funtion
 let normalize = (adr, arg) => {
 	if (adr == '/l0ax'){
-		if(l1){                             //for initializing range once
+		if(l1){// for initializing range once
 			imuL.a.x.min = arg-0.1
 		  imuL.a.x.max = arg+0.1
 		  l1 = false
 		}
 		imuL.a.x.v = Math.round(((arg - imuL.a.x.min) * 100)/(imuL.a.x.max - imuL.a.x.min))
-		if(range){                            //for calculating range
+		if(range){// for calculating range
 			if (imuL.a.x.v < 0 || imuL.a.x.v > 100){
 				if (imuL.a.x.min > arg) imuL.a.x.min = arg
 				if (imuL.a.x.max < arg) imuL.a.x.max = arg
-				imuL.a.x.v = Math.round(((arg - imuL.a.x.min) * 100)/(imuL.a.x.max - imuL.a.x.min)) // normalization from 0 - 100
+				imuL.a.x.v = Math.round(((arg - imuL.a.x.min) * 100)/(imuL.a.x.max - imuL.a.x.min))// normalization from 0 - 100
 			}
 		}
-		sendToUi('axl', imuL.a.x.v)                      //send normalized value to ui and external
+		sendToUi('axl', imuL.a.x.v)// send normalized value to ui and external
 		sendToExt('/l0ax', imuL.a.x.v)
 		if (auto)
 			l0lr = Math.round(((arg - imuL.a.x.min) * 255)/(imuL.a.x.max - imuL.a.x.min)) // normalization from 0 - 255 for LEDs autonomous color mapping
@@ -295,14 +294,14 @@ let normalize = (adr, arg) => {
 	}
 }
 
-//////////////////////////////////////////      autonomous mod send currently mapped colors every second
+// autonomous mod send currently mapped colors every second
 setInterval(function () {
 	if (auto){
 		if((Math.abs(pl0lr-l0lr)) > 20 || (Math.abs(pl0lg-l0lg)) > 20 || (Math.abs(pl0lb-l0lb)) > 20){
 			rgb.ls.r = l0lr
 			rgb.ls.g = l0lg
 			rgb.ls.b = l0lb
-			colorflow(rgb, 'left', mod)                //send rgb to pixel walk funtion
+			colorflow(rgb, 'left', mod)// send rgb to pixel walk funtion
 			pl0lr = l0lr
 			pl0lg = l0lg
 			pl0lb = l0lb

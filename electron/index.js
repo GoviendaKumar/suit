@@ -1,4 +1,5 @@
-
+// electron window for executing html page. window creation and configuration
+// by Anton
 const {app, BrowserWindow} = require('electron')
 const url  = require('url')
 const path = require('path')

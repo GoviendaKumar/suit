@@ -1,4 +1,5 @@
-
+// helper functions
+// by Anton
 export let loop = callback => {
 	let frame = () => {
 		callback()

@@ -1,4 +1,5 @@
-
+// IMU graph in UI
+// Anton
 import {map} from './helpers'
 
 let Graph = (cv, ct, color) => {

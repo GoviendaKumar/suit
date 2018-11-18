@@ -1,11 +1,12 @@
-
+// environment setup
+// by Anton
 const fs  = require('fs')
 
 module.exports = {
 	set (env) {
 		return fs.writeFile(
-			'./dev/index.js', 
-			`module.exports = '${env}'`, 
+			'./dev/index.js',
+			`module.exports = '${env}'`,
 			err => console.log)
 	},
 	is (env) {

@@ -1,9 +1,13 @@
-/////////////////////////////////////////////pixel walk function
+// by Govienda
+// pixel walk function
+// mod = pixel turns off, side = left or right strip, rgb = rgb values
+
 let colorflow = (rgb, side, mod) => {
   if(side == 'left'||side == 'both'){
 		sendToArduino('/l0lr', rgb.ls.r); sendToUi('l0lr', rgb.ls.r)
     sendToArduino('/l0lg', rgb.ls.g); sendToUi('l0lg', rgb.ls.g)
     sendToArduino('/l0lb', rgb.ls.b); sendToUi('l0lb', rgb.ls.b)
+    // timeout function for walking animation 150 milisec per frame sequence
 		setTimeout(function(){sendToArduino('/l1lr', rgb.ls.r); sendToUi('l1lr', rgb.ls.r)}, 150)
 		setTimeout(function(){sendToArduino('/l1lg', rgb.ls.g); sendToUi('l1lg', rgb.ls.g)}, 150)
 		setTimeout(function(){sendToArduino('/l1lb', rgb.ls.b); sendToUi('l1lb', rgb.ls.b)}, 150)
@@ -14,6 +18,7 @@ let colorflow = (rgb, side, mod) => {
     setTimeout(function(){sendToArduino('/l3lg', rgb.ls.g); sendToUi('l3lg', rgb.ls.g)}, 450)
     setTimeout(function(){sendToArduino('/l3lb', rgb.ls.b); sendToUi('l3lb', rgb.ls.b)}, 450)
     if (mod == 2){
+      // this will turn leds off in same sequence
       setTimeout(function(){sendToArduino('/l0lr', 0); sendToUi('l0lr', 0)}, 150)
   		setTimeout(function(){sendToArduino('/l0lg', 0); sendToUi('l0lg', 0)}, 150)
   		setTimeout(function(){sendToArduino('/l0lb', 0); sendToUi('l0lb', 0)}, 150)

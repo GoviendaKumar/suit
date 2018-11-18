@@ -1,4 +1,5 @@
-
+// processes startup
+// by Anton
 const {spawn} = require('child_process')
 const colors  = require('colors')
 
