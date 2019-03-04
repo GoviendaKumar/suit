@@ -28,14 +28,11 @@ let normalize = (adr, arg) => {
 		  imuL.a.x.max = arg+0.1
 		  l1 = false
 		}
-		imuL.a.x.v = Math.round(((arg - imuL.a.x.min) * 100)/(imuL.a.x.max - imuL.a.x.min))
 		if(range){// for calculating range
-			if (imuL.a.x.v < 0 || imuL.a.x.v > 100){
 				if (imuL.a.x.min > arg) imuL.a.x.min = arg
 				if (imuL.a.x.max < arg) imuL.a.x.max = arg
-				imuL.a.x.v = Math.round(((arg - imuL.a.x.min) * 100)/(imuL.a.x.max - imuL.a.x.min))// normalization from 0 - 100
 			}
-		}
+		imuL.a.x.v = Math.round(((arg - imuL.a.x.min) * 100)/(imuL.a.x.max - imuL.a.x.min))// normalization from 0 - 100
 		sendToUi('axl', imuL.a.x.v)// send normalized value to ui and external
 		sendToExt('/l0ax', imuL.a.x.v)
 		if (auto)
@@ -171,6 +168,7 @@ let normalize = (adr, arg) => {
 			if (imuR.a.x.max < arg) imuR.a.x.max = arg
 		}
 		imuR.a.x.v = Math.round(((arg - imuR.a.x.min) * 100)/(imuR.a.x.max - imuR.a.x.min))
+		console.log(imuR.a.x.v);
 		sendToUi('axr', imuR.a.x.v)
 		sendToExt('/r0ax', imuR.a.x.v)
 		if (auto)

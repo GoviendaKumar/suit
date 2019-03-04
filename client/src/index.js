@@ -334,7 +334,8 @@ ipcRenderer.on('update', (event, msg) => {
 		 // send IMU values to graph
 		 //left imu
 		 // axl =  accelero x value
-		 if (i == 'axl') IMUs.lArm.acc.x.record(msg[i])
+		 if (i == 'axl'){ IMUs.lArm.acc.x.record(msg[i])
+		  console.log(msg[i])}
 		 if (i == 'ayl') IMUs.lArm.acc.y.record(msg[i])
 		 if (i == 'azl') IMUs.lArm.acc.z.record(msg[i])
 		 // gxl =  gyro x value
